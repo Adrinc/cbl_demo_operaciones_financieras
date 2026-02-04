@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import 'package:nethive_neo/theme/theme.dart';
+import 'package:facturacion_demo/theme/theme.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
     GlobalKey<ScaffoldMessengerState>();

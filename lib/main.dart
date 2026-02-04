@@ -1,85 +1,74 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:nethive_neo/helpers/scroll_behavior.dart';
-import 'package:nethive_neo/internationalization/internationalization.dart';
-import 'package:nethive_neo/router/router.dart';
-import 'package:nethive_neo/theme/theme.dart';
 import 'package:provider/provider.dart';
-
-import 'package:nethive_neo/providers/visual_state_provider.dart';
-import 'package:nethive_neo/helpers/globals.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:flutter_portal/flutter_portal.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:facturacion_demo/providers/navigation_provider.dart';
+import 'package:facturacion_demo/providers/theme_provider.dart';
+import 'package:facturacion_demo/providers/factura_provider.dart';
+import 'package:facturacion_demo/providers/proveedor_provider.dart';
+import 'package:facturacion_demo/providers/pago_provider.dart';
+import 'package:facturacion_demo/providers/validacion_provider.dart';
+import 'package:facturacion_demo/router/router.dart';
+import 'package:facturacion_demo/theme/theme.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+/// ============================================================================
+/// MAIN
+/// ============================================================================
+/// Punto de entrada de la aplicación
+/// Configura MultiProvider con todos los providers necesarios
+/// ============================================================================
+void main() {
+  // Remove '#' from web URLs
   setPathUrlStrategy();
-
-  // Initialize globals (SharedPreferences for theme)
-  await initGlobals();
-
-  GoRouter.optionURLReflectsImperativeAPIs = true;
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (context) => VisualStateProvider(context)),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  
+  runApp(const FacturacionDemoApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  State<MyApp> createState() => _MyAppState();
-
-  static _MyAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>()!;
-}
-
-class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('es');
-  ThemeMode _themeMode = AppTheme.themeMode;
-
-  void setLocale(Locale value) => setState(() => _locale = value);
-  void setThemeMode(ThemeMode mode) => setState(() {
-        _themeMode = mode;
-        AppTheme.saveThemeMode(mode);
-      });
+class FacturacionDemoApp extends StatelessWidget {
+  const FacturacionDemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Portal(
-      child: MaterialApp.router(
-        title: 'CBLuna Dashboard Demos',
-        debugShowCheckedModeBanner: false,
-        locale: _locale,
-        localizationsDelegates: const [
-          AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('en', 'US')],
-        theme: ThemeData(
-          brightness: Brightness.light,
-          dividerColor: Colors.grey,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          dividerColor: Colors.grey,
-        ),
-        themeMode: _themeMode,
-        routerConfig: router,
-        scrollBehavior: MyCustomScrollBehavior(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => FacturaProvider()),
+        ChangeNotifierProvider(create: (_) => ProveedorProvider()),
+        ChangeNotifierProvider(create: (_) => PagoProvider()),
+        ChangeNotifierProvider(create: (_) => ValidacionProvider()),
+      ],
+      child: const _AppContent(),
+    );
+  }
+}
+
+class _AppContent extends StatelessWidget {
+  const _AppContent();
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+
+    return MaterialApp.router(
+      title: 'Demo Optimización de Pagos - CBLuna',
+      debugShowCheckedModeBanner: false,
+      routerConfig: appRouter,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: LightModeTheme.colorScheme,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        scaffoldBackgroundColor: LightModeTheme.background,
+        extensions: [LightModeTheme.appTheme],
       ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: DarkModeTheme.colorScheme,
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        scaffoldBackgroundColor: DarkModeTheme.background,
+        extensions: [DarkModeTheme.appTheme],
+      ),
+      themeMode: themeProvider.themeMode,
     );
   }
 }

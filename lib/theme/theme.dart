@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:nethive_neo/helpers/globals.dart';
-import 'package:nethive_neo/main.dart';
+import 'package:facturacion_demo/helpers/globals.dart';
+import 'package:facturacion_demo/main.dart';
 
 const kThemeModeKey = '__theme_mode__';
 
@@ -72,70 +72,73 @@ abstract class AppTheme {
 
 class LightModeTheme extends AppTheme {
   @override
-  Color primaryColor = const Color(0xFF2563EB); // Azul corporativo
+  Color primaryColor =
+      const Color(0xFF1E3A8A); // Deep corporate blue - estructura/control
   @override
-  Color secondaryColor = const Color(0xFF1E293B); // Azul oscuro
+  Color secondaryColor =
+      const Color(0xFF10B981); // Emerald green - beneficio/optimización
   @override
-  Color tertiaryColor = const Color(0xFF10B981); // Verde success
+  Color tertiaryColor = const Color(0xFF3B82F6); // Bright blue - acento
   @override
-  Color alternate = const Color(0xFFF59E0B); // Ámbar warning
+  Color alternate = const Color(0xFFF59E0B); // Amber - warnings
   @override
-  Color primaryBackground = const Color(0xFFF8FAFC); // Fondo claro
+  Color primaryBackground = const Color(0xFFF8FAFC); // Light gray background
   @override
-  Color secondaryBackground = const Color(0xFFFFFFFF); // Tarjetas blancas
+  Color secondaryBackground = const Color(0xFFFFFFFF); // White surface
   @override
-  Color tertiaryBackground = const Color(0xFFF1F5F9); // Hover
+  Color tertiaryBackground = const Color(0xFFE5E7EB); // Light border/hover
   @override
   Color transparentBackground = const Color(0xFF64748B).withOpacity(.1);
   @override
-  Color primaryText = const Color(0xFF1E293B); // Texto principal
+  Color primaryText = const Color(0xFF0F172A); // Dark blue-gray text
   @override
-  Color secondaryText = const Color(0xFF64748B); // Texto secundario
+  Color secondaryText = const Color(0xFF475569); // Medium gray text
   @override
-  Color tertiaryText = const Color(0xFF94A3B8); // Texto terciario
+  Color tertiaryText = const Color(0xFF94A3B8); // Light gray text
   @override
-  Color hintText = const Color(0xFF94A3B8); // Placeholders
+  Color hintText = const Color(0xFF94A3B8); // Text disabled
   @override
-  Color error = const Color(0xFFEF4444); // Rojo error
+  Color error = const Color(0xFFEF4444); // Red - losses/negative
   @override
-  Color warning = const Color(0xFFF59E0B); // Ámbar warning
+  Color warning = const Color(0xFFF59E0B); // Amber - attention needed
   @override
-  Color success = const Color(0xFF10B981); // Verde success
+  Color success = const Color(0xFF10B981); // Green - savings/positive
   @override
-  Color formBackground = const Color(0xFF2563EB).withOpacity(.05);
+  Color formBackground = const Color(0xFF1E3A8A).withOpacity(.05);
 }
 
 class DarkModeTheme extends AppTheme {
   @override
-  Color primaryColor = const Color(0xFF3B82F6); // Azul más claro para dark
+  Color primaryColor = const Color(0xFF3B82F6); // Bright blue - primary actions
   @override
-  Color secondaryColor = const Color(0xFF0F172A); // Azul muy oscuro
+  Color secondaryColor = const Color(0xFF34D399); // Light emerald - beneficios
   @override
-  Color tertiaryColor = const Color(0xFF10B981); // Verde success
+  Color tertiaryColor = const Color(0xFF60A5FA); // Light blue - acento
   @override
-  Color alternate = const Color(0xFFF59E0B); // Ámbar warning
+  Color alternate = const Color(0xFFFBBF24); // Bright amber - warnings
   @override
-  Color primaryBackground = const Color(0xFF0F172A); // Fondo oscuro
+  Color primaryBackground =
+      const Color(0xFF0F172A); // Deep dark blue background
   @override
-  Color secondaryBackground = const Color(0xFF1E293B); // Tarjetas oscuras
+  Color secondaryBackground = const Color(0xFF1E293B); // Slate surface
   @override
-  Color tertiaryBackground = const Color(0xFF334155); // Hover oscuro
+  Color tertiaryBackground = const Color(0xFF334155); // Dark border/hover
   @override
   Color transparentBackground = const Color(0xFF64748B).withOpacity(.2);
   @override
-  Color primaryText = const Color(0xFFF8FAFC); // Texto claro
+  Color primaryText = const Color(0xFFF1F5F9); // Off-white text
   @override
-  Color secondaryText = const Color(0xFFCBD5E1); // Texto secundario claro
+  Color secondaryText = const Color(0xFF94A3B8); // Light gray text
   @override
-  Color tertiaryText = const Color(0xFF94A3B8); // Texto terciario
+  Color tertiaryText = const Color(0xFF64748B); // Muted gray text
   @override
-  Color hintText = const Color(0xFF64748B); // Placeholders oscuros
+  Color hintText = const Color(0xFF64748B); // Text disabled
   @override
-  Color error = const Color(0xFFEF4444); // Rojo error
+  Color error = const Color(0xFFF87171); // Light red - losses/negative
   @override
-  Color warning = const Color(0xFFF59E0B); // Ámbar warning
+  Color warning = const Color(0xFFFBBF24); // Bright amber - attention needed
   @override
-  Color success = const Color(0xFF10B981); // Verde success
+  Color success = const Color(0xFF34D399); // Light green - savings/positive
   @override
   Color formBackground = const Color(0xFF3B82F6).withOpacity(.1);
 }

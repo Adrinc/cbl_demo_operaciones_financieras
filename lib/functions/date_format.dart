@@ -1,104 +1,60 @@
 import 'package:intl/intl.dart';
 
-String dateFormat(
-  dynamic x, // Acepta DateTime o String
-  [
-  bool includeTime = false,
-  bool includeDayName = true,
-  bool includeTimeAgo = false,
-  String language = 'es_MX',
-]) {
-  DateTime? date;
-
-  // Verifica si es una cadena de fecha y conviértela a DateTime
-  if (x is String) {
-    date = DateTime.tryParse(x);
-  } else if (x is DateTime) {
-    date = x;
-  }
-
-  if (date == null) return '-';
-
-  // Convierte a hora local
-  date = date.toLocal();
-
-  String formattedDate;
-
-  // Formatea la fecha
-  if (!includeTime) {
-    if (includeDayName) {
-      
-    formattedDate = DateFormat('EEE. dd/MMM/yyyy', language).format(date);
-    }
-    else{
-      formattedDate = DateFormat('dd/MMM/yyyy', language).format(date);
-    }
-  } else {
-    formattedDate = DateFormat('EEE. dd/MMM/yyyy HH:mm', language).format(date);
-  }
-
-  // Capitaliza la primera letra del día
-  List<String> parts = formattedDate.split(' ');
-
-  if (parts.isNotEmpty) {
-    parts[0] = parts[0][0].toUpperCase() + parts[0].substring(1).toLowerCase();
-  }
-
-  // Capitaliza la primera letra del mes
-  if (parts.length >= 2) {
-    String datePart = parts[1]; // "dd/MMM/yyyy" o "dd/MMM/yyyy HH:mm"
-    List<String> dateComponents = datePart.split('/');
-
-    if (dateComponents.length >= 2) {
-      // Capitaliza el mes
-      dateComponents[1] = dateComponents[1][0].toUpperCase() +
-          dateComponents[1].substring(1).toLowerCase();
-      parts[1] = dateComponents.join('/');
-    }
-  }
-
-  formattedDate = parts.join(' ');
-
-  // Manejo de includeTimeAgo
-  if (includeTimeAgo) {
-    final Duration difference = DateTime.now().difference(date);
-    String timeAgo = '';
-
-    if (difference.isNegative) {
-      timeAgo = '\n(hace 0 segundos)';
-    } else {
-      if (difference.inSeconds < 60) {
-        timeAgo = '\n(hace ${difference.inSeconds} segundos)';
-      } else if (difference.inMinutes < 60) {
-        timeAgo = '\n(hace ${difference.inMinutes} minutos)';
-      } else if (difference.inHours < 48) {
-        timeAgo = '\n(hace ${difference.inHours} horas)';
-      } else if (difference.inDays <= 30) {
-        timeAgo = '\n(hace ${difference.inDays} días)';
-      } else if (difference.inDays > 30) {
-        timeAgo = '\n(hace ${difference.inDays ~/ 30} meses)';
-      }
-    }
-
-    formattedDate = '$formattedDate  $timeAgo';
-  }
-
-  return formattedDate;
+/// Formatea una fecha al estilo español completo
+/// Ejemplo: DateTime(2026, 1, 3) → "3 de enero del 2026"
+String formatDate(DateTime date) {
+  final months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  
+  return '${date.day} de ${months[date.month - 1]} del ${date.year}';
 }
 
-// Definir una lista de nombres de los días de la semana
-List<String> daysOfWeek = [
-  'Lunes',
-  'Martes',
-  'Miércoles',
-  'Jueves',
-  'Viernes',
-  'Sábado',
-  'Domingo'
-];
+/// Formatea una fecha y hora al estilo español completo
+/// Ejemplo: DateTime(2026, 1, 3, 13, 30) → "3 de enero del 2026 a las 13:30"
+String formatDateTime(DateTime dateTime) {
+  final months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  
+  final timeFormat = DateFormat('HH:mm');
+  final timeStr = timeFormat.format(dateTime);
+  
+  return '${dateTime.day} de ${months[dateTime.month - 1]} del ${dateTime.year} a las $timeStr';
+}
 
-// Obtener el nombre del día de la semana
-String getDayName(DateTime now) {
-  String dayName = daysOfWeek[now.weekday - 1];
-  return dayName;
+/// Formatea solo la hora
+/// Ejemplo: DateTime(2026, 1, 3, 13, 30) → "13:30"
+String formatTime(DateTime dateTime) {
+  final timeFormat = DateFormat('HH:mm');
+  return timeFormat.format(dateTime);
+}
+
+/// Formatea fecha en formato corto
+/// Ejemplo: DateTime(2026, 1, 3) → "03/01/2026"
+String formatDateShort(DateTime date) {
+  final dateFormat = DateFormat('dd/MM/yyyy');
+  return dateFormat.format(date);
+}
+
+/// Calcula diferencia de días entre dos fechas
+/// Retorna número de días (puede ser negativo si la fecha es futura)
+int daysBetween(DateTime from, DateTime to) {
+  from = DateTime(from.year, from.month, from.day);
+  to = DateTime(to.year, to.month, to.day);
+  return (to.difference(from).inHours / 24).round();
+}
+
+/// Retorna texto relativo de días
+/// Ejemplo: -5 → "Vence en 5 días", 0 → "Vence hoy", 5 → "Venció hace 5 días"
+String diasRelativoTexto(int dias) {
+  if (dias < 0) {
+    return 'Vence en ${dias.abs()} día${dias.abs() == 1 ? '' : 's'}';
+  } else if (dias == 0) {
+    return 'Vence hoy';
+  } else {
+    return 'Venció hace $dias día${dias == 1 ? '' : 's'}';
+  }
 }
