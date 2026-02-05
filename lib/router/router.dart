@@ -6,6 +6,10 @@ import 'package:facturacion_demo/pages/page_not_found/page_not_found.dart';
 import 'package:facturacion_demo/pages/dashboard/dashboard_page.dart';
 import 'package:facturacion_demo/pages/facturas/facturas_page.dart';
 import 'package:facturacion_demo/pages/optimizacion/optimizacion_page.dart';
+import 'package:facturacion_demo/pages/simulador/simulador_page.dart';
+import 'package:facturacion_demo/pages/validaciones/validaciones_page.dart';
+import 'package:facturacion_demo/pages/proveedores/proveedores_page.dart';
+import 'package:facturacion_demo/pages/reportes/reportes_page.dart';
 
 /// ============================================================================
 /// ROUTER CONFIGURATION
@@ -51,7 +55,7 @@ final GoRouter appRouter = GoRouter(
           name: 'simulador',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Simulador page (Fase 7)
+            child: const SimuladorPage(),
           ),
         ),
         GoRoute(
@@ -59,7 +63,7 @@ final GoRouter appRouter = GoRouter(
           name: 'validaciones',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Validaciones page (Fase 8)
+            child: const ValidacionesPage(),
           ),
         ),
         GoRoute(
@@ -67,7 +71,7 @@ final GoRouter appRouter = GoRouter(
           name: 'proveedores',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Proveedores page (Fase 9)
+            child: const ProveedoresPage(),
           ),
         ),
         GoRoute(
@@ -75,7 +79,7 @@ final GoRouter appRouter = GoRouter(
           name: 'reportes',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Reportes page (Fase 10)
+            child: const ReportesPage(),
           ),
         ),
         GoRoute(
