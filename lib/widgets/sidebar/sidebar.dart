@@ -54,7 +54,10 @@ class Sidebar extends StatelessWidget {
         children: [
           // Logo + Collapse button
           Container(
-            height: 70,
+            constraints: const BoxConstraints(
+              minHeight: 60,
+              maxHeight: 70,
+            ),
             padding: EdgeInsets.symmetric(
               horizontal: isCollapsed ? 8 : 16,
               vertical: 12,
@@ -190,19 +193,23 @@ class Sidebar extends StatelessWidget {
 
           // Botón expandir (solo visible cuando está colapsado)
           if (isCollapsed)
-            GestureDetector(
-              onTap: onToggleCollapse,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: theme.border.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Icon(
-                  Icons.chevron_right,
-                  color: theme.textSecondary,
-                  size: 20,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: onToggleCollapse,
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: theme.border.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    Icons.chevron_right,
+                    color: theme.textSecondary,
+                    size: 20,
+                  ),
                 ),
               ),
             ),
@@ -210,7 +217,8 @@ class Sidebar extends StatelessWidget {
           // Navigation items
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              physics: const ClampingScrollPhysics(),
               children: [
                 SidebarItem(
                   icon: Icons.dashboard_outlined,
@@ -266,7 +274,7 @@ class Sidebar extends StatelessWidget {
 
           // Exit button
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
@@ -282,7 +290,7 @@ class Sidebar extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,

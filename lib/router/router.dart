@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/pages/main_container/main_container_page.dart';
-import 'package:facturacion_demo/pages/page_not_found/page_not_found.dart';
+import 'package:facturacion_demo/pages/page_not_found.dart';
 import 'package:facturacion_demo/pages/dashboard/dashboard_page.dart';
+import 'package:facturacion_demo/pages/configuracion/configuracion_page.dart';
 import 'package:facturacion_demo/pages/facturas/facturas_page.dart';
 import 'package:facturacion_demo/pages/optimizacion/optimizacion_page.dart';
 import 'package:facturacion_demo/pages/simulador/simulador_page.dart';
@@ -87,11 +87,11 @@ final GoRouter appRouter = GoRouter(
           name: 'configuracion',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Configuración page (Fase 11)
+            child: const ConfiguracionPage(),
           ),
         ),
       ],
     ),
   ],
-  errorBuilder: (context, state) => const PageNotFound(),
+  errorBuilder: (context, state) => const PageNotFoundPage(),
 );

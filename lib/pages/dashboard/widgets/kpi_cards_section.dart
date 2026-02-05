@@ -26,11 +26,27 @@ class KPICardsSection extends StatelessWidget {
     final pagosPendientes = pagoProvider.getPagosPropuestos().length;
     final ahorroPerdido = facturaProvider.getAhorroPerdido();
 
-    // En desktop: fila horizontal con cards compactos
+    // En desktop: fila horizontal con cards más prominentes
     if (!isMobile) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // KPI destacado: Ahorro Generado (más grande)
+          Expanded(
+            flex: 2,
+            child: KPICard(
+              icon: Icons.savings,
+              title: 'Ahorro Generado',
+              value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
+              subtitle: 'Optimización activa en $ejercicioFiscal',
+              color: const Color(0xFF10B981),
+              trendIcon: Icons.trending_up,
+              trendColor: const Color(0xFF10B981),
+              isCompact: false, // Más grande
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Resto de KPIs compactos
           Expanded(
             child: KPICard(
               icon: Icons.receipt_long,
@@ -38,19 +54,6 @@ class KPICardsSection extends StatelessWidget {
               value: totalFacturas.toString(),
               subtitle: 'Ejercicio $ejercicioFiscal',
               color: const Color(0xFF1E3A8A),
-              isCompact: true,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: KPICard(
-              icon: Icons.savings,
-              title: 'Ahorro Generado',
-              value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
-              subtitle: 'Con optimización',
-              color: const Color(0xFF10B981),
-              trendIcon: Icons.trending_up,
-              trendColor: const Color(0xFF10B981),
               isCompact: true,
             ),
           ),
@@ -82,7 +85,7 @@ class KPICardsSection extends StatelessWidget {
               icon: Icons.trending_down,
               title: 'Ahorro Perdido',
               value: '\$ ${ahorroPerdido.toStringAsFixed(2)} USD',
-              subtitle: 'Oportunidad no aprovechada',
+              subtitle: 'Oportunidad',
               color: const Color(0xFFEF4444),
               trendIcon: Icons.warning,
               trendColor: const Color(0xFFEF4444),
