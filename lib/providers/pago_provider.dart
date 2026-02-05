@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/data/mock_data.dart';
+import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
 /// PAGO PROVIDER
@@ -153,10 +154,14 @@ class PagoProvider extends ChangeNotifier {
   /// Obtiene el conteo de pagos por estado
   Map<String, int> getPagosCountByEstado() {
     return {
-      EstadoPago.propuesto: _pagos.where((p) => p.estado == EstadoPago.propuesto).length,
-      EstadoPago.aprobado: _pagos.where((p) => p.estado == EstadoPago.aprobado).length,
-      EstadoPago.ejecutado: _pagos.where((p) => p.estado == EstadoPago.ejecutado).length,
-      EstadoPago.rechazado: _pagos.where((p) => p.estado == EstadoPago.rechazado).length,
+      EstadoPago.propuesto:
+          _pagos.where((p) => p.estado == EstadoPago.propuesto).length,
+      EstadoPago.aprobado:
+          _pagos.where((p) => p.estado == EstadoPago.aprobado).length,
+      EstadoPago.ejecutado:
+          _pagos.where((p) => p.estado == EstadoPago.ejecutado).length,
+      EstadoPago.rechazado:
+          _pagos.where((p) => p.estado == EstadoPago.rechazado).length,
     };
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/data/mock_data.dart';
+import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
 /// PROVEEDOR PROVIDER
@@ -35,7 +36,9 @@ class ProveedorProvider extends ChangeNotifier {
 
   /// Obtiene proveedores activos
   List<Proveedor> getProveedoresActivos() {
-    return _proveedores.where((p) => p.estado == EstadoProveedor.activo).toList();
+    return _proveedores
+        .where((p) => p.estado == EstadoProveedor.activo)
+        .toList();
   }
 
   /// Obtiene proveedores por esquema
@@ -101,16 +104,21 @@ class ProveedorProvider extends ChangeNotifier {
   /// Obtiene el conteo de proveedores por estado
   Map<String, int> getProveedoresCountByEstado() {
     return {
-      EstadoProveedor.activo: _proveedores.where((p) => p.estado == EstadoProveedor.activo).length,
-      EstadoProveedor.inactivo: _proveedores.where((p) => p.estado == EstadoProveedor.inactivo).length,
+      EstadoProveedor.activo:
+          _proveedores.where((p) => p.estado == EstadoProveedor.activo).length,
+      EstadoProveedor.inactivo: _proveedores
+          .where((p) => p.estado == EstadoProveedor.inactivo)
+          .length,
     };
   }
 
   /// Obtiene el conteo de proveedores por esquema
   Map<String, int> getProveedoresCountByEsquema() {
     return {
-      EsquemaPago.pull: _proveedores.where((p) => p.esquemaActivo == EsquemaPago.pull).length,
-      EsquemaPago.push: _proveedores.where((p) => p.esquemaActivo == EsquemaPago.push).length,
+      EsquemaPago.pull:
+          _proveedores.where((p) => p.esquemaActivo == EsquemaPago.pull).length,
+      EsquemaPago.push:
+          _proveedores.where((p) => p.esquemaActivo == EsquemaPago.push).length,
     };
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/data/mock_data.dart';
+import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
 /// VALIDACION PROVIDER
@@ -52,7 +53,9 @@ class ValidacionProvider extends ChangeNotifier {
 
   /// Obtiene validaciones pendientes
   List<Validacion> getValidacionesPendientes() {
-    return _validaciones.where((v) => v.estado == EstadoValidacion.pendiente).toList();
+    return _validaciones
+        .where((v) => v.estado == EstadoValidacion.pendiente)
+        .toList();
   }
 
   /// Agrega una nueva validación
@@ -203,9 +206,15 @@ class ValidacionProvider extends ChangeNotifier {
   /// Obtiene el conteo de validaciones por estado
   Map<String, int> getValidacionesCountByEstado() {
     return {
-      EstadoValidacion.pendiente: _validaciones.where((v) => v.estado == EstadoValidacion.pendiente).length,
-      EstadoValidacion.aprobado: _validaciones.where((v) => v.estado == EstadoValidacion.aprobado).length,
-      EstadoValidacion.rechazado: _validaciones.where((v) => v.estado == EstadoValidacion.rechazado).length,
+      EstadoValidacion.pendiente: _validaciones
+          .where((v) => v.estado == EstadoValidacion.pendiente)
+          .length,
+      EstadoValidacion.aprobado: _validaciones
+          .where((v) => v.estado == EstadoValidacion.aprobado)
+          .length,
+      EstadoValidacion.rechazado: _validaciones
+          .where((v) => v.estado == EstadoValidacion.rechazado)
+          .length,
     };
   }
 

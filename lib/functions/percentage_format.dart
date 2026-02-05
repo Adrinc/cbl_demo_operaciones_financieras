@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 /// Formatea un porcentaje con 2 decimales y símbolo %
 /// Ejemplo: 4.5 → "4.50 %"
 String formatPercentage(double percentage) {

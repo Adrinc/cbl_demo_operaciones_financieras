@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/pages/main_container/main_container_page.dart';
-import 'package:facturacion_demo/pages/page_not_found.dart';
+import 'package:facturacion_demo/pages/page_not_found/page_not_found.dart';
 
 /// ============================================================================
 /// ROUTER CONFIGURATION

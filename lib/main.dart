@@ -20,7 +20,7 @@ import 'package:facturacion_demo/theme/theme.dart';
 void main() {
   // Remove '#' from web URLs
   setPathUrlStrategy();
-  
+
   runApp(const FacturacionDemoApp());
 }
 
@@ -56,17 +56,13 @@ class _AppContent extends StatelessWidget {
       routerConfig: appRouter,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: LightModeTheme.colorScheme,
+        scaffoldBackgroundColor: AppTheme.lightTheme.primaryBackground,
         textTheme: GoogleFonts.poppinsTextTheme(),
-        scaffoldBackgroundColor: LightModeTheme.background,
-        extensions: [LightModeTheme.appTheme],
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        colorScheme: DarkModeTheme.colorScheme,
+        scaffoldBackgroundColor: AppTheme.darkTheme.primaryBackground,
         textTheme: GoogleFonts.poppinsTextTheme(),
-        scaffoldBackgroundColor: DarkModeTheme.background,
-        extensions: [DarkModeTheme.appTheme],
       ),
       themeMode: themeProvider.themeMode,
     );

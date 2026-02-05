@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:facturacion_demo/helpers/globals.dart';
-import 'package:facturacion_demo/main.dart';
 
 const kThemeModeKey = '__theme_mode__';
-
-void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
 
 abstract class AppTheme {
   static ThemeMode get themeMode {
@@ -45,6 +41,16 @@ abstract class AppTheme {
   abstract Color warning;
   abstract Color success;
   abstract Color formBackground;
+
+  // Aliases para compatibilidad con widgets
+  Color get primary => primaryColor;
+  Color get secondary => secondaryColor;
+  Color get surface => secondaryBackground;
+  Color get border => tertiaryBackground;
+  Color get textPrimary => primaryText;
+  Color get textSecondary => secondaryText;
+  Color get textDisabled => hintText;
+  Color get accent => tertiaryColor;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;

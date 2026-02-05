@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/data/mock_data.dart';
+import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
 /// FACTURA PROVIDER
@@ -45,7 +46,10 @@ class FacturaProvider extends ChangeNotifier {
 
   /// Obtiene facturas con DPP disponible
   List<Factura> getFacturasConDPP() {
-    return _facturas.where((f) => f.porcentajeDPP > 0 && f.estado == EstadoFactura.pendiente).toList();
+    return _facturas
+        .where(
+            (f) => f.porcentajeDPP > 0 && f.estado == EstadoFactura.pendiente)
+        .toList();
   }
 
   /// Obtiene facturas vencidas
@@ -111,7 +115,8 @@ class FacturaProvider extends ChangeNotifier {
   /// Calcula el ahorro potencial disponible
   double getAhorroPotencial() {
     return _facturas
-        .where((f) => f.estado == EstadoFactura.pendiente && f.porcentajeDPP > 0)
+        .where(
+            (f) => f.estado == EstadoFactura.pendiente && f.porcentajeDPP > 0)
         .fold(0.0, (sum, f) => sum + f.montoDPP);
   }
 
@@ -130,10 +135,14 @@ class FacturaProvider extends ChangeNotifier {
   /// Obtiene el conteo de facturas por estado
   Map<String, int> getFacturasCountByEstado() {
     return {
-      EstadoFactura.pendiente: _facturas.where((f) => f.estado == EstadoFactura.pendiente).length,
-      EstadoFactura.pagada: _facturas.where((f) => f.estado == EstadoFactura.pagada).length,
-      EstadoFactura.vencida: _facturas.where((f) => f.estado == EstadoFactura.vencida).length,
-      EstadoFactura.cancelada: _facturas.where((f) => f.estado == EstadoFactura.cancelada).length,
+      EstadoFactura.pendiente:
+          _facturas.where((f) => f.estado == EstadoFactura.pendiente).length,
+      EstadoFactura.pagada:
+          _facturas.where((f) => f.estado == EstadoFactura.pagada).length,
+      EstadoFactura.vencida:
+          _facturas.where((f) => f.estado == EstadoFactura.vencida).length,
+      EstadoFactura.cancelada:
+          _facturas.where((f) => f.estado == EstadoFactura.cancelada).length,
     };
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/theme/theme.dart';
-import 'package:facturacion_demo/functions/money_format.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
@@ -40,7 +39,8 @@ class KPICard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: MouseRegion(
-        cursor: onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
+        cursor:
+            onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
         child: Container(
           padding: EdgeInsets.all(isMobile ? 16 : 20),
           decoration: BoxDecoration(
@@ -80,7 +80,8 @@ class KPICard extends StatelessWidget {
                   ),
                   if (trendIcon != null && trendColor != null)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: trendColor!.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(6),
