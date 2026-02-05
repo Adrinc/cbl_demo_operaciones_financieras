@@ -38,14 +38,14 @@ class Sidebar extends StatelessWidget {
         color: theme.surface,
         border: Border(
           right: BorderSide(
-            color: theme.border,
+            color: theme.border.withOpacity(0.5),
             width: 1,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.textPrimary.withOpacity(0.03),
-            blurRadius: 8,
+            color: theme.primary.withOpacity(0.05),
+            blurRadius: 12,
             offset: const Offset(2, 0),
           ),
         ],
@@ -55,85 +55,157 @@ class Sidebar extends StatelessWidget {
           // Logo + Collapse button
           Container(
             height: 70,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: EdgeInsets.symmetric(
+              horizontal: isCollapsed ? 8 : 16,
+              vertical: 12,
+            ),
             decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  theme.primary.withOpacity(0.08),
+                  theme.primary.withOpacity(0.02),
+                ],
+              ),
               border: Border(
                 bottom: BorderSide(
-                  color: theme.border,
+                  color: theme.border.withOpacity(0.5),
                   width: 1,
                 ),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (!isCollapsed) ...[
-                  // Logo ARUX
-                  Row(
+            child: isCollapsed
+                // Colapsado: solo logo centrado, botón debajo
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 36,
-                        height: 36,
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: theme.primary,
-                          borderRadius: BorderRadius.circular(8),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              theme.primary.withOpacity(0.2),
+                              theme.primary.withOpacity(0.05),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: theme.primary.withOpacity(0.3),
+                            width: 1,
+                          ),
                         ),
-                        child: Center(
-                          child: Text(
-                            'A',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            'assets/images/favicon.png',
+                            width: 32,
+                            height: 32,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'ARUX',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: theme.textPrimary,
+                    ],
+                  )
+                // Expandido: Row con logo + texto + botón
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Logo ARXIS
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  theme.primary.withOpacity(0.2),
+                                  theme.primary.withOpacity(0.05),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: theme.primary.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                'assets/images/favicon.png',
+                                width: 36,
+                                height: 36,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          ShaderMask(
+                            shaderCallback: (bounds) => LinearGradient(
+                              colors: [
+                                theme.primary,
+                                theme.primary.withOpacity(0.8),
+                              ],
+                            ).createShader(bounds),
+                            child: Text(
+                              appName,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Collapse button
+                      Container(
+                        decoration: BoxDecoration(
+                          color: theme.border.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.chevron_left,
+                            color: theme.textSecondary,
+                            size: 20,
+                          ),
+                          onPressed: onToggleCollapse,
+                          tooltip: 'Colapsar',
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(
+                            minWidth: 28,
+                            minHeight: 28,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ] else ...[
-                  // Logo colapsado
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: theme.primary,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'A',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-                // Collapse button
-                IconButton(
-                  icon: Icon(
-                    isCollapsed ? Icons.chevron_right : Icons.chevron_left,
-                    color: theme.textSecondary,
-                    size: 20,
-                  ),
-                  onPressed: onToggleCollapse,
-                  tooltip: isCollapsed ? 'Expandir' : 'Colapsar',
-                ),
-              ],
-            ),
           ),
+
+          // Botón expandir (solo visible cuando está colapsado)
+          if (isCollapsed)
+            GestureDetector(
+              onTap: onToggleCollapse,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: theme.border.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Icon(
+                  Icons.chevron_right,
+                  color: theme.textSecondary,
+                  size: 20,
+                ),
+              ),
+            ),
 
           // Navigation items
           Expanded(
@@ -198,7 +270,7 @@ class Sidebar extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  color: theme.border,
+                  color: theme.border.withOpacity(0.5),
                   width: 1,
                 ),
               ),
@@ -207,13 +279,22 @@ class Sidebar extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () => _launchURL('https://cbluna.com/'),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: theme.error.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        theme.error.withOpacity(0.15),
+                        theme.error.withOpacity(0.05),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: theme.error,
+                      color: theme.error.withOpacity(0.5),
                       width: 1,
                     ),
                   ),
@@ -226,7 +307,7 @@ class Sidebar extends StatelessWidget {
                         color: theme.error,
                       ),
                       if (!isCollapsed) ...[
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 10),
                         Text(
                           'Salir de la Demo',
                           style: TextStyle(

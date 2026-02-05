@@ -4,7 +4,7 @@
 // ==============================================
 // INFORMACIÓN DE LA EMPRESA / DEMO
 // ==============================================
-const String appName = 'ARUX';
+const String appName = 'ARXIS';
 const String appFullName = 'Sistema de Optimización de Pagos';
 const String appTagline = 'Optimiza tus pagos, maximiza tu ahorro';
 
@@ -44,20 +44,20 @@ const String urlSitioWeb = 'https://cbluna.com/';
 // INFORMACIÓN DEL DEMO
 // ==============================================
 const String demoVersion = '1.0.0';
-const String demoDisclaimer = 
+const String demoDisclaimer =
     'Esta es una demostración interactiva con datos simulados. '
     'No se conecta a servidores reales y los cambios se pierden al recargar la página.';
-const String demoRoleNote = 
+const String demoRoleNote =
     'El sistema soporta múltiples roles y niveles de acceso, '
     'los cuales no se muestran en esta versión demostrativa.';
 
 // ==============================================
 // USUARIO DEMO (ADMINISTRADOR)
 // ==============================================
-const String adminName = 'Fernanda Castillo';
+const String adminName = 'María';
 const String adminRole = 'Administrador';
-const String adminEmail = 'fernanda.castillo@demo.com';
-const String adminAvatarPath = 'assets/images/avatares/avatar1.jpg';
+const String adminEmail = 'maria@demo.com';
+const String adminAvatarPath = 'assets/images/avatares/Maria.png';
 
 // ==============================================
 // ESTADOS DE FACTURA

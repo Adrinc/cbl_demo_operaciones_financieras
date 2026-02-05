@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/pages/main_container/main_container_page.dart';
 import 'package:facturacion_demo/pages/page_not_found/page_not_found.dart';
+import 'package:facturacion_demo/pages/dashboard/dashboard_page.dart';
+import 'package:facturacion_demo/pages/facturas/facturas_page.dart';
 
 /// ============================================================================
 /// ROUTER CONFIGURATION
@@ -24,7 +26,7 @@ final GoRouter appRouter = GoRouter(
           name: 'dashboard',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Dashboard page (Fase 4)
+            child: const DashboardPage(),
           ),
         ),
         GoRoute(
@@ -32,7 +34,7 @@ final GoRouter appRouter = GoRouter(
           name: 'facturas',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Facturas page (Fase 5)
+            child: const FacturasPage(),
           ),
         ),
         GoRoute(

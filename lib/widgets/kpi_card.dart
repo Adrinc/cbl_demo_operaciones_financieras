@@ -17,6 +17,7 @@ class KPICard extends StatelessWidget {
   final IconData? trendIcon;
   final Color? trendColor;
   final VoidCallback? onTap;
+  final bool isCompact;
 
   const KPICard({
     super.key,
@@ -28,6 +29,7 @@ class KPICard extends StatelessWidget {
     this.trendIcon,
     this.trendColor,
     this.onTap,
+    this.isCompact = false,
   });
 
   @override
@@ -36,45 +38,67 @@ class KPICard extends StatelessWidget {
     final isMobile = size.width <= mobileSize;
     final theme = Theme.of(context).extension<AppTheme>()!;
 
+    // Padding y tamaños reducidos para modo compacto
+    final padding = isCompact ? 14.0 : (isMobile ? 16.0 : 20.0);
+    final iconBoxSize = isCompact ? 40.0 : (isMobile ? 48.0 : 56.0);
+    final iconSize = isCompact ? 22.0 : (isMobile ? 26.0 : 30.0);
+    final titleSize = isCompact ? 12.0 : (isMobile ? 13.0 : 14.0);
+    final valueSize = isCompact ? 18.0 : (isMobile ? 22.0 : 28.0);
+    final subtitleSize = isCompact ? 11.0 : 12.0;
+    final verticalSpacing = isCompact ? 8.0 : (isMobile ? 14.0 : 18.0);
+
     return GestureDetector(
       onTap: onTap,
       child: MouseRegion(
         cursor:
             onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
         child: Container(
-          padding: EdgeInsets.all(isMobile ? 16 : 20),
+          padding: EdgeInsets.all(padding),
           decoration: BoxDecoration(
             color: theme.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: theme.border,
+              color: color.withOpacity(0.2),
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: theme.textPrimary.withOpacity(0.05),
-                blurRadius: 10,
+                color: color.withOpacity(0.08),
+                blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Icon + Trend
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Icono con degradado
                   Container(
-                    width: isMobile ? 48 : 56,
-                    height: isMobile ? 48 : 56,
+                    width: iconBoxSize,
+                    height: iconBoxSize,
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          color.withOpacity(0.2),
+                          color.withOpacity(0.05),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: color.withOpacity(0.3),
+                        width: 1,
+                      ),
                     ),
                     child: Icon(
                       icon,
-                      size: isMobile ? 26 : 30,
+                      size: iconSize,
                       color: color,
                     ),
                   ),
@@ -83,25 +107,36 @@ class KPICard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: trendColor!.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(6),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            trendColor!.withOpacity(0.25),
+                            trendColor!.withOpacity(0.1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: trendColor!.withOpacity(0.4),
+                          width: 1,
+                        ),
                       ),
                       child: Icon(
                         trendIcon,
-                        size: 18,
+                        size: isCompact ? 14 : 18,
                         color: trendColor,
                       ),
                     ),
                 ],
               ),
 
-              SizedBox(height: isMobile ? 14 : 18),
+              SizedBox(height: verticalSpacing),
 
               // Title
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: isMobile ? 13 : 14,
+                  fontSize: titleSize,
                   fontWeight: FontWeight.w500,
                   color: theme.textSecondary,
                 ),
@@ -109,13 +144,13 @@ class KPICard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
 
-              SizedBox(height: isMobile ? 6 : 8),
+              SizedBox(height: isCompact ? 4 : (isMobile ? 6 : 8)),
 
               // Value
               Text(
                 value,
                 style: TextStyle(
-                  fontSize: isMobile ? 22 : 28,
+                  fontSize: valueSize,
                   fontWeight: FontWeight.bold,
                   color: theme.textPrimary,
                   letterSpacing: -0.5,
@@ -126,11 +161,11 @@ class KPICard extends StatelessWidget {
 
               // Subtitle (optional)
               if (subtitle != null) ...[
-                const SizedBox(height: 6),
+                SizedBox(height: isCompact ? 4 : 6),
                 Text(
                   subtitle!,
                   style: TextStyle(
-                    fontSize: isMobile ? 12 : 13,
+                    fontSize: subtitleSize,
                     fontWeight: FontWeight.w400,
                     color: theme.textSecondary,
                   ),

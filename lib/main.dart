@@ -56,13 +56,33 @@ class _AppContent extends StatelessWidget {
       routerConfig: appRouter,
       theme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.light,
         scaffoldBackgroundColor: AppTheme.lightTheme.primaryBackground,
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        colorScheme: ColorScheme.light(
+          primary: AppTheme.lightTheme.primaryColor,
+          secondary: AppTheme.lightTheme.secondaryColor,
+          surface: AppTheme.lightTheme.secondaryBackground,
+          error: AppTheme.lightTheme.error,
+        ),
+        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.light().textTheme),
+        extensions: <ThemeExtension<dynamic>>[
+          AppTheme.lightTheme,
+        ],
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.dark,
         scaffoldBackgroundColor: AppTheme.darkTheme.primaryBackground,
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        colorScheme: ColorScheme.dark(
+          primary: AppTheme.darkTheme.primaryColor,
+          secondary: AppTheme.darkTheme.secondaryColor,
+          surface: AppTheme.darkTheme.secondaryBackground,
+          error: AppTheme.darkTheme.error,
+        ),
+        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+        extensions: <ThemeExtension<dynamic>>[
+          AppTheme.darkTheme,
+        ],
       ),
       themeMode: themeProvider.themeMode,
     );

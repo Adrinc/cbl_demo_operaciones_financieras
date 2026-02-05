@@ -39,6 +39,7 @@ class _SidebarItemState extends State<SidebarItem> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
           context.go(widget.route);
@@ -49,23 +50,58 @@ class _SidebarItemState extends State<SidebarItem> {
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: isActive
-                ? theme.primary.withOpacity(0.1)
+            gradient: isActive
+                ? LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      theme.primary.withOpacity(0.15),
+                      theme.primary.withOpacity(0.05),
+                    ],
+                  )
                 : _isHovered
-                    ? theme.primary.withOpacity(0.05)
-                    : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+                    ? LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          theme.primary.withOpacity(0.08),
+                          theme.primary.withOpacity(0.02),
+                        ],
+                      )
+                    : null,
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: isActive ? theme.primary : Colors.transparent,
+              color: isActive
+                  ? theme.primary.withOpacity(0.5)
+                  : _isHovered
+                      ? theme.primary.withOpacity(0.2)
+                      : Colors.transparent,
               width: 1,
             ),
           ),
           child: Row(
             children: [
-              Icon(
-                widget.icon,
-                size: 22,
-                color: isActive ? theme.primary : theme.textSecondary,
+              // Icono con contenedor
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  gradient: isActive
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            theme.primary.withOpacity(0.2),
+                            theme.primary.withOpacity(0.1),
+                          ],
+                        )
+                      : null,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  widget.icon,
+                  size: 20,
+                  color: isActive ? theme.primary : theme.textSecondary,
+                ),
               ),
               if (!widget.isCollapsed) ...[
                 const SizedBox(width: 12),
@@ -80,6 +116,28 @@ class _SidebarItemState extends State<SidebarItem> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                // Indicador activo
+                if (isActive)
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.primary,
+                          theme.primary.withOpacity(0.6),
+                        ],
+                      ),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.primary.withOpacity(0.5),
+                          blurRadius: 4,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ],
           ),

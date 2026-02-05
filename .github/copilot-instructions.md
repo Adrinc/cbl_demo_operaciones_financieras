@@ -1,5 +1,10 @@
 # Copilot Instructions for Payment Optimization Demo
 
+## ⚠️ REGLA CRÍTICA - NUNCA EJECUTAR EN WINDOWS
+**NUNCA ejecutar la aplicación en Windows con `flutter run -d windows`.**
+**Esta es una aplicación WEB. Siempre usar Chrome: `flutter run -d chrome`**
+**NO usar: `flutter run -d windows`, `flutter run -d macos`, `flutter run -d linux`**
+
 ## Project Overview
 **Demo de Optimización de Pagos y Operaciones Financieras** is a cross-platform Flutter demo application (Web, Windows, iOS, Android, macOS, Linux) showcasing a professional payment optimization system for enterprise financial operations. Built with Provider state management, responsive design, PlutoGrid tables (desktop), Syncfusion charts, and elegant UI components. **This is a pure demo application with hardcoded data - NO backend connections, NO authentication, NO data persistence.**
 
@@ -416,7 +421,7 @@ flutter build ios --release      # iOS
 **Table Columns** (PlutoGrid):
 | Column | Description |
 |--------|-------------|
-| ID ARUX | Internal ID |
+| ID ARXIS | Internal ID |
 | Proveedor | Supplier name with avatar |
 | Factura | Invoice number |
 | Importe | Amount with currency |

@@ -40,14 +40,14 @@ class PageHeader extends StatelessWidget {
         color: theme.surface,
         border: Border(
           bottom: BorderSide(
-            color: theme.border,
+            color: theme.border.withOpacity(0.5),
             width: 1,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.textPrimary.withOpacity(0.03),
-            blurRadius: 8,
+            color: theme.primary.withOpacity(0.03),
+            blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
@@ -57,49 +57,140 @@ class PageHeader extends StatelessWidget {
         children: [
           // Menu button (mobile) o título
           if (isMobile)
-            IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: theme.textPrimary,
-                size: 26,
+            Container(
+              decoration: BoxDecoration(
+                color: theme.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
               ),
-              onPressed: onMenuPressed,
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: theme.primary,
+                  size: 24,
+                ),
+                onPressed: onMenuPressed,
+              ),
             )
           else
-            Text(
-              'Optimización de Pagos',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: theme.textPrimary,
-              ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        theme.primary.withOpacity(0.15),
+                        theme.primary.withOpacity(0.05),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: theme.primary.withOpacity(0.2),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.trending_up,
+                    color: theme.primary,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Optimización de Pagos',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: theme.textPrimary,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+              ],
             ),
 
           // Right side: AI button, Theme toggle, Admin info
           Row(
             children: [
-              // AI Assistant button
+              // AI Assistant button (simple, like theme toggle)
               Tooltip(
                 message: 'Asistente IA',
-                child: _AnimatedIconButton(
-                  icon: Icons.smart_toy_outlined,
-                  color: theme.secondary,
-                  onPressed: () => _showAIDialog(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        theme.secondary.withOpacity(0.15),
+                        theme.secondary.withOpacity(0.05),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: theme.secondary.withOpacity(0.3),
+                    ),
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.smart_toy_outlined,
+                      color: theme.secondary,
+                      size: 20,
+                    ),
+                    onPressed: () => _showAIDialog(context),
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ),
                 ),
               ),
 
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
 
               // Theme toggle
               Tooltip(
-                message: themeProvider.isDarkMode ? 'Modo Claro' : 'Modo Oscuro',
-                child: IconButton(
-                  icon: Icon(
-                    themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                    color: theme.textSecondary,
-                    size: 22,
+                message:
+                    themeProvider.isDarkMode ? 'Modo Claro' : 'Modo Oscuro',
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: themeProvider.isDarkMode
+                          ? [
+                              theme.warning.withOpacity(0.15),
+                              theme.warning.withOpacity(0.05),
+                            ]
+                          : [
+                              theme.primary.withOpacity(0.15),
+                              theme.primary.withOpacity(0.05),
+                            ],
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: themeProvider.isDarkMode
+                          ? theme.warning.withOpacity(0.3)
+                          : theme.primary.withOpacity(0.3),
+                    ),
                   ),
-                  onPressed: () => themeProvider.toggleTheme(),
+                  child: IconButton(
+                    icon: Icon(
+                      themeProvider.isDarkMode
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                      color: themeProvider.isDarkMode
+                          ? theme.warning
+                          : theme.primary,
+                      size: 20,
+                    ),
+                    onPressed: () => themeProvider.toggleTheme(),
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ),
                 ),
               ),
 
@@ -107,108 +198,77 @@ class PageHeader extends StatelessWidget {
 
               // Admin info (hide on small mobile)
               if (!isMobile || size.width > 400)
-                Row(
-                  children: [
-                    // Avatar
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: theme.primary.withOpacity(0.2),
-                      child: Text(
-                        adminName.substring(0, 1),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: theme.primary,
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        theme.primary.withOpacity(0.08),
+                        theme.primary.withOpacity(0.02),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: theme.primary.withOpacity(0.15),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      // Avatar con imagen real y borde degradado
+                      Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              theme.primary,
+                              theme.primary.withOpacity(0.5),
+                            ],
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundImage: const AssetImage(adminAvatarPath),
+                          backgroundColor: theme.surface,
                         ),
                       ),
-                    ),
 
-                    if (!isMobile) ...[
-                      const SizedBox(width: 12),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            adminName,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: theme.textPrimary,
+                      if (!isMobile) ...[
+                        const SizedBox(width: 10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              adminName,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: theme.textPrimary,
+                              ),
                             ),
-                          ),
-                          Text(
-                            adminRole,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: theme.textSecondary,
+                            Text(
+                              adminRole,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                color: theme.textSecondary,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Widget auxiliar para botón con animación de pulso
-class _AnimatedIconButton extends StatefulWidget {
-  final IconData icon;
-  final Color color;
-  final VoidCallback onPressed;
-
-  const _AnimatedIconButton({
-    required this.icon,
-    required this.color,
-    required this.onPressed,
-  });
-
-  @override
-  State<_AnimatedIconButton> createState() => _AnimatedIconButtonState();
-}
-
-class _AnimatedIconButtonState extends State<_AnimatedIconButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.15).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: IconButton(
-        icon: Icon(
-          widget.icon,
-          color: widget.color,
-          size: 24,
-        ),
-        onPressed: widget.onPressed,
       ),
     );
   }

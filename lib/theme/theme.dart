@@ -5,7 +5,7 @@ import 'package:facturacion_demo/helpers/globals.dart';
 
 const kThemeModeKey = '__theme_mode__';
 
-abstract class AppTheme {
+abstract class AppTheme extends ThemeExtension<AppTheme> {
   static ThemeMode get themeMode {
     final darkMode = prefs.getBool(kThemeModeKey);
     return darkMode == null
@@ -78,75 +78,92 @@ abstract class AppTheme {
 
 class LightModeTheme extends AppTheme {
   @override
-  Color primaryColor =
-      const Color(0xFF1E3A8A); // Deep corporate blue - estructura/control
+  Color primaryColor = const Color(0xFF0F766E); // Teal profesional
   @override
-  Color secondaryColor =
-      const Color(0xFF10B981); // Emerald green - beneficio/optimización
+  Color secondaryColor = const Color(0xFFF97316); // Naranja vibrante
   @override
-  Color tertiaryColor = const Color(0xFF3B82F6); // Bright blue - acento
+  Color tertiaryColor = const Color(0xFF06B6D4); // Cyan brillante
   @override
-  Color alternate = const Color(0xFFF59E0B); // Amber - warnings
+  Color alternate = const Color(0xFFEAB308); // Amarillo dorado
   @override
-  Color primaryBackground = const Color(0xFFF8FAFC); // Light gray background
+  Color primaryBackground = const Color(0xFFF8FAFC); // Fondo claro
   @override
-  Color secondaryBackground = const Color(0xFFFFFFFF); // White surface
+  Color secondaryBackground = const Color(0xFFFFFFFF); // Surface blanco
   @override
-  Color tertiaryBackground = const Color(0xFFE5E7EB); // Light border/hover
+  Color tertiaryBackground = const Color(0xFFE2E8F0); // Bordes suaves
   @override
-  Color transparentBackground = const Color(0xFF64748B).withOpacity(.1);
+  Color transparentBackground = const Color(0xFF64748B).withOpacity(.08);
   @override
-  Color primaryText = const Color(0xFF0F172A); // Dark blue-gray text
+  Color primaryText = const Color(0xFF0F172A); // Texto oscuro
   @override
-  Color secondaryText = const Color(0xFF475569); // Medium gray text
+  Color secondaryText = const Color(0xFF475569); // Texto secundario
   @override
-  Color tertiaryText = const Color(0xFF94A3B8); // Light gray text
+  Color tertiaryText = const Color(0xFF94A3B8); // Texto terciario
   @override
-  Color hintText = const Color(0xFF94A3B8); // Text disabled
+  Color hintText = const Color(0xFF94A3B8); // Placeholder
   @override
-  Color error = const Color(0xFFEF4444); // Red - losses/negative
+  Color error = const Color(0xFFDC2626); // Rojo error
   @override
-  Color warning = const Color(0xFFF59E0B); // Amber - attention needed
+  Color warning = const Color(0xFFEAB308); // Amarillo warning
   @override
-  Color success = const Color(0xFF10B981); // Green - savings/positive
+  Color success = const Color(0xFF16A34A); // Verde success
   @override
-  Color formBackground = const Color(0xFF1E3A8A).withOpacity(.05);
+  Color formBackground = const Color(0xFF0F766E).withOpacity(.05);
+
+  @override
+  ThemeExtension<AppTheme> copyWith() => LightModeTheme();
+
+  @override
+  ThemeExtension<AppTheme> lerp(ThemeExtension<AppTheme>? other, double t) {
+    if (other is! LightModeTheme) return this;
+    return this;
+  }
 }
 
 class DarkModeTheme extends AppTheme {
   @override
-  Color primaryColor = const Color(0xFF3B82F6); // Bright blue - primary actions
+  Color primaryColor =
+      const Color(0xFF2DD4BF); // Teal vibrante (como la imagen)
   @override
-  Color secondaryColor = const Color(0xFF34D399); // Light emerald - beneficios
+  Color secondaryColor = const Color(0xFFF97316); // Naranja vibrante
   @override
-  Color tertiaryColor = const Color(0xFF60A5FA); // Light blue - acento
+  Color tertiaryColor = const Color(0xFF22D3EE); // Cyan brillante
   @override
-  Color alternate = const Color(0xFFFBBF24); // Bright amber - warnings
+  Color alternate = const Color(0xFFFBBF24); // Amarillo dorado
   @override
-  Color primaryBackground =
-      const Color(0xFF0F172A); // Deep dark blue background
+  Color primaryBackground = const Color(0xFF0D1117); // Fondo muy oscuro azulado
   @override
-  Color secondaryBackground = const Color(0xFF1E293B); // Slate surface
+  Color secondaryBackground = const Color(0xFF161B22); // Surface oscuro
   @override
-  Color tertiaryBackground = const Color(0xFF334155); // Dark border/hover
+  Color tertiaryBackground = const Color(0xFF30363D); // Bordes sutiles
   @override
-  Color transparentBackground = const Color(0xFF64748B).withOpacity(.2);
+  Color transparentBackground = const Color(0xFF30363D).withOpacity(.5);
   @override
-  Color primaryText = const Color(0xFFF1F5F9); // Off-white text
+  Color primaryText = const Color(0xFFF0F6FC); // Texto casi blanco
   @override
-  Color secondaryText = const Color(0xFF94A3B8); // Light gray text
+  Color secondaryText = const Color(0xFF8B949E); // Texto secundario
   @override
-  Color tertiaryText = const Color(0xFF64748B); // Muted gray text
+  Color tertiaryText = const Color(0xFF6E7681); // Texto terciario
   @override
-  Color hintText = const Color(0xFF64748B); // Text disabled
+  Color hintText = const Color(0xFF484F58); // Placeholder oscuro
   @override
-  Color error = const Color(0xFFF87171); // Light red - losses/negative
+  Color error = const Color(0xFFF87171); // Rojo claro
   @override
-  Color warning = const Color(0xFFFBBF24); // Bright amber - attention needed
+  Color warning = const Color(0xFFFBBF24); // Amarillo brillante
   @override
-  Color success = const Color(0xFF34D399); // Light green - savings/positive
+  Color success = const Color(0xFF34D399); // Verde esmeralda
+
   @override
-  Color formBackground = const Color(0xFF3B82F6).withOpacity(.1);
+  ThemeExtension<AppTheme> copyWith() => DarkModeTheme();
+
+  @override
+  ThemeExtension<AppTheme> lerp(ThemeExtension<AppTheme>? other, double t) {
+    if (other is! DarkModeTheme) return this;
+    return this;
+  }
+
+  @override
+  Color formBackground = const Color(0xFF2DD4BF).withOpacity(.08);
 }
 
 extension TextStyleHelper on TextStyle {
