@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:facturacion_demo/pages/facturas/widgets/factura_pluto_grid.dart';
+import 'package:facturacion_demo/pages/facturas/widgets/factura_mobile_cards.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
 /// FACTURAS PAGE
 /// ============================================================================
-/// Página de gestión de facturas con PlutoGrid y CRUD completo
+/// Página de gestión de facturas con PlutoGrid (desktop) y Cards (mobile)
+/// Responsive: Desktop muestra tabla, móvil muestra tarjetas con paginación
 /// ============================================================================
 
 class FacturasPage extends StatelessWidget {
@@ -20,10 +22,15 @@ class FacturasPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height - (isMobile ? 150 : 180),
-            child: const FacturaPlutoGrid(),
-          ),
+          // Desktop: PlutoGrid
+          if (!isMobile)
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 180,
+              child: const FacturaPlutoGrid(),
+            ),
+
+          // Mobile: Cards con paginación
+          if (isMobile) const FacturaMobileCards(),
         ],
       ),
     );

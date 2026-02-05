@@ -5,6 +5,7 @@ import 'package:facturacion_demo/pages/main_container/main_container_page.dart';
 import 'package:facturacion_demo/pages/page_not_found/page_not_found.dart';
 import 'package:facturacion_demo/pages/dashboard/dashboard_page.dart';
 import 'package:facturacion_demo/pages/facturas/facturas_page.dart';
+import 'package:facturacion_demo/pages/optimizacion/optimizacion_page.dart';
 
 /// ============================================================================
 /// ROUTER CONFIGURATION
@@ -42,7 +43,7 @@ final GoRouter appRouter = GoRouter(
           name: 'optimizacion',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: Container(), // TODO: Optimización page (Fase 6)
+            child: const OptimizacionPage(),
           ),
         ),
         GoRoute(
