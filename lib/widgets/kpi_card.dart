@@ -42,9 +42,10 @@ class KPICard extends StatelessWidget {
     final padding = isCompact ? 14.0 : (isMobile ? 16.0 : 20.0);
     final iconBoxSize = isCompact ? 40.0 : (isMobile ? 48.0 : 56.0);
     final iconSize = isCompact ? 22.0 : (isMobile ? 26.0 : 30.0);
-    final titleSize = isCompact ? 12.0 : (isMobile ? 13.0 : 14.0);
-    final valueSize = isCompact ? 18.0 : (isMobile ? 22.0 : 28.0);
-    final subtitleSize = isCompact ? 11.0 : 12.0;
+    // 🔥 Tamaños aumentados para mejor legibilidad
+    final titleSize = isCompact ? 13.0 : (isMobile ? 14.5 : 14.0);
+    final valueSize = isCompact ? 20.0 : (isMobile ? 24.0 : 28.0);
+    final subtitleSize = isCompact ? 11.5 : 12.0;
     final verticalSpacing = isCompact ? 8.0 : (isMobile ? 14.0 : 18.0);
 
     return GestureDetector(
@@ -61,12 +62,9 @@ class KPICard extends StatelessWidget {
               color: color.withOpacity(0.2),
               width: 1,
             ),
+            // 🔥 SOMBRAS PREMIUM - Máximo impacto visual
             boxShadow: [
-              BoxShadow(
-                color: color.withOpacity(0.08),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
+              ...theme.shadowPremium,
             ],
           ),
           child: Column(

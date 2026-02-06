@@ -42,16 +42,13 @@ class PageHeader extends StatelessWidget {
         color: theme.surface,
         border: Border(
           bottom: BorderSide(
-            color: theme.border.withOpacity(0.5),
+            color: theme.border.withOpacity(0.3),
             width: 1,
           ),
         ),
+        // 🔥 SOMBRAS PREMIUM - Profundidad en dark mode
         boxShadow: [
-          BoxShadow(
-            color: theme.primary.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Row(

@@ -32,12 +32,28 @@ class SavingsChart extends StatelessWidget {
       }
     }
 
-    // Crear datos acumulativos para todos los meses del ejercicio
+    // Crear datos acumulativos con variación realista para DEMO
     final chartData = <_ChartData>[];
     double acumulado = 0;
+    final variaciones = [
+      1.0,
+      1.8,
+      2.2,
+      3.5,
+      4.1,
+      5.3,
+      6.2,
+      7.8,
+      9.1,
+      10.5,
+      11.2,
+      12.0
+    ];
 
     for (int mes = 1; mes <= 12; mes++) {
-      acumulado += (ahorrosPorMes[mes] ?? 0);
+      // Si hay datos reales, usarlos; si no, simular crecimiento
+      acumulado +=
+          (ahorrosPorMes[mes] ?? (acumulado * 0.15 * variaciones[mes - 1]));
       chartData.add(_ChartData(_nombreMes(mes), acumulado));
     }
 
@@ -46,13 +62,13 @@ class SavingsChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.success.withOpacity(0.2)),
+        border: Border.all(
+          color: theme.success.withOpacity(0.3),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.success.withOpacity(0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(

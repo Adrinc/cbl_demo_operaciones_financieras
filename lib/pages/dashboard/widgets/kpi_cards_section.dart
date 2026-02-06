@@ -96,51 +96,73 @@ class KPICardsSection extends StatelessWidget {
       );
     }
 
-    // En mobile: columna vertical
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: [
-        KPICard(
-          icon: Icons.receipt_long,
-          title: 'Total Facturas',
-          value: totalFacturas.toString(),
-          subtitle: 'Ejercicio $ejercicioFiscal',
-          color: const Color(0xFF1E3A8A), // Primary color
-        ),
-        KPICard(
-          icon: Icons.savings,
-          title: 'Ahorro Generado',
-          value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
-          subtitle: 'Con optimización',
-          color: const Color(0xFF10B981), // Success color
-          trendIcon: Icons.trending_up,
-          trendColor: const Color(0xFF10B981),
-        ),
-        KPICard(
-          icon: Icons.check_circle,
-          title: 'Pagos Ejecutados',
-          value: pagosEjecutados.toString(),
-          subtitle: 'Completados',
-          color: const Color(0xFF10B981), // Success color
-        ),
-        KPICard(
-          icon: Icons.pending,
-          title: 'Pagos Pendientes',
-          value: pagosPendientes.toString(),
-          subtitle: 'Por aprobar',
-          color: const Color(0xFFF59E0B), // Warning color
-        ),
-        KPICard(
-          icon: Icons.trending_down,
-          title: 'Ahorro Perdido',
-          value: '\$ ${ahorroPerdido.toStringAsFixed(2)} USD',
-          subtitle: 'Oportunidad no aprovechada',
-          color: const Color(0xFFEF4444), // Error color
-          trendIcon: Icons.warning,
-          trendColor: const Color(0xFFEF4444),
-        ),
-      ],
+    // En mobile: grid 2x2 + 1 (última fila con 1 card centrada)
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Calcular ancho de cada card (50% menos spacing)
+        final cardWidth = (constraints.maxWidth - 12) / 2;
+
+        return Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            SizedBox(
+              width: cardWidth,
+              child: KPICard(
+                icon: Icons.receipt_long,
+                title: 'Total Facturas',
+                value: totalFacturas.toString(),
+                subtitle: 'Ejercicio $ejercicioFiscal',
+                color: const Color(0xFF1E3A8A),
+              ),
+            ),
+            SizedBox(
+              width: cardWidth,
+              child: KPICard(
+                icon: Icons.savings,
+                title: 'Ahorro Generado',
+                value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
+                subtitle: 'Con optimización',
+                color: const Color(0xFF10B981),
+                trendIcon: Icons.trending_up,
+                trendColor: const Color(0xFF10B981),
+              ),
+            ),
+            SizedBox(
+              width: cardWidth,
+              child: KPICard(
+                icon: Icons.check_circle,
+                title: 'Pagos Ejecutados',
+                value: pagosEjecutados.toString(),
+                subtitle: 'Completados',
+                color: const Color(0xFF10B981),
+              ),
+            ),
+            SizedBox(
+              width: cardWidth,
+              child: KPICard(
+                icon: Icons.pending,
+                title: 'Pagos Pendientes',
+                value: pagosPendientes.toString(),
+                subtitle: 'Por aprobar',
+                color: const Color(0xFFF59E0B),
+              ),
+            ),
+            SizedBox(
+              width: cardWidth,
+              child: KPICard(
+                icon: Icons.trending_down,
+                title: 'Ahorro Perdido',
+                value: '\$ ${ahorroPerdido.toStringAsFixed(2)} USD',
+                subtitle: 'Oportunidad no aprovechada',
+                color: const Color(0xFFEF4444),
+                trendIcon: Icons.warning,
+                trendColor: const Color(0xFFEF4444),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

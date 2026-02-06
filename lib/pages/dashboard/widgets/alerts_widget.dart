@@ -40,13 +40,13 @@ class AlertsWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.warning.withOpacity(0.5)),
+        border: Border.all(
+          color: theme.warning.withOpacity(0.5),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.warning.withOpacity(0.12),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(
@@ -141,7 +141,7 @@ class AlertsWidget extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: theme.warning.withOpacity(0.25),
+                  color: theme.warning.withOpacity(0.35), // 🔥 Más visible
                 ),
               ),
               child: Row(

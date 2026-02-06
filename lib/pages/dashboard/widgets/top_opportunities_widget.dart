@@ -39,13 +39,13 @@ class TopOpportunitiesWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.border, width: 1),
+        border: Border.all(
+          color: theme.border.withOpacity(0.5),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.textPrimary.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(
@@ -197,7 +197,7 @@ class TopOpportunitiesWidget extends StatelessWidget {
             color: theme.primaryBackground,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: theme.border.withOpacity(0.3),
+              color: theme.border.withOpacity(0.5), // 🔥 Más visible
               width: 1,
             ),
           ),
@@ -239,7 +239,7 @@ class TopOpportunitiesWidget extends StatelessWidget {
                   color: theme.surface,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: theme.border.withOpacity(0.3),
+                    color: theme.border.withOpacity(0.4), // 🔥 Más visible
                     width: 1,
                   ),
                 ),

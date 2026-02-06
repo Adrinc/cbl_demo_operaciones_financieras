@@ -22,13 +22,13 @@ class QuickActionsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.border, width: 1),
+        border: Border.all(
+          color: theme.border.withOpacity(0.5),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.textPrimary.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(
@@ -62,44 +62,48 @@ class QuickActionsSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           if (isMobile)
-            Column(
+            // 🔥 GRID 2x2 para mobile - más limpio y organizado
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 0.95,
               children: [
                 _buildActionButton(
                   context: context,
                   theme: theme,
                   icon: Icons.analytics,
                   title: 'Optimizar Pagos',
-                  subtitle: 'Encuentra las mejores oportunidades',
+                  subtitle: 'Mejores oportunidades',
                   color: theme.secondary,
                   onTap: () => context.go(Routes.optimizacion),
                 ),
-                const SizedBox(height: 12),
                 _buildActionButton(
                   context: context,
                   theme: theme,
                   icon: Icons.receipt_long,
                   title: 'Ver Facturas',
-                  subtitle: 'Gestiona facturas pendientes',
+                  subtitle: 'Gestiona pendientes',
                   color: theme.primary,
                   onTap: () => context.go(Routes.facturas),
                 ),
-                const SizedBox(height: 12),
                 _buildActionButton(
                   context: context,
                   theme: theme,
                   icon: Icons.calculate,
-                  title: 'Simular Escenarios',
-                  subtitle: 'Prueba diferentes estrategias',
+                  title: 'Simulador',
+                  subtitle: 'Prueba estrategias',
                   color: theme.accent,
                   onTap: () => context.go(Routes.simulador),
                 ),
-                const SizedBox(height: 12),
                 _buildActionButton(
                   context: context,
                   theme: theme,
                   icon: Icons.assessment,
-                  title: 'Ver Reportes',
-                  subtitle: 'Análisis detallado de ahorro',
+                  title: 'Reportes',
+                  subtitle: 'Análisis detallado',
                   color: theme.warning,
                   onTap: () => context.go(Routes.reportes),
                 ),
@@ -187,7 +191,10 @@ class QuickActionsSection extends StatelessWidget {
               ],
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: color.withOpacity(0.3), width: 2),
+            border: Border.all(
+              color: color.withOpacity(0.4),
+              width: 2, // 🔥 Borde prominente en botones
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

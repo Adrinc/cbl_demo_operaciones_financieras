@@ -38,16 +38,13 @@ class Sidebar extends StatelessWidget {
         color: theme.surface,
         border: Border(
           right: BorderSide(
-            color: theme.border.withOpacity(0.5),
+            color: theme.border.withOpacity(0.3),
             width: 1,
           ),
         ),
+        // 🔥 SOMBRAS PREMIUM - Profundidad real en dark mode
         boxShadow: [
-          BoxShadow(
-            color: theme.primary.withOpacity(0.05),
-            blurRadius: 12,
-            offset: const Offset(2, 0),
-          ),
+          ...theme.shadowStrong,
         ],
       ),
       child: Column(

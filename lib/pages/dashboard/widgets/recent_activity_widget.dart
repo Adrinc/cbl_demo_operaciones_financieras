@@ -36,13 +36,13 @@ class RecentActivityWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.border, width: 1),
+        border: Border.all(
+          color: theme.border.withOpacity(0.5),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.textPrimary.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(
@@ -157,23 +157,7 @@ class RecentActivityWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: last5.length,
-              separatorBuilder: (_, index) => Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Container(
-                  height: 24,
-                  width: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        theme.primary.withOpacity(0.3),
-                        theme.primary.withOpacity(0.1),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              separatorBuilder: (_, index) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final pago = last5[index];
                 return _buildActivityItem(context, theme, pago);
@@ -187,173 +171,191 @@ class RecentActivityWidget extends StatelessWidget {
   Widget _buildActivityItem(BuildContext context, AppTheme theme, Pago pago) {
     final isOptimizado = pago.tipo == 'optimizado';
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Timeline dot
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isOptimizado
-                  ? [theme.success, theme.success.withOpacity(0.7)]
-                  : [
-                      theme.textSecondary.withOpacity(0.3),
-                      theme.textSecondary.withOpacity(0.2)
-                    ],
-            ),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: theme.surface,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: (isOptimizado ? theme.success : theme.textSecondary)
-                    .withOpacity(0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: theme.primaryBackground,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isOptimizado
+              ? theme.success.withOpacity(0.3)
+              : theme.border.withOpacity(0.5),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: theme.textPrimary.withOpacity(0.03),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header row con badge
+          Row(
+            children: [
+              // Badge de tipo
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: isOptimizado
+                        ? [theme.success, theme.success.withOpacity(0.8)]
+                        : [theme.primary, theme.primary.withOpacity(0.8)],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (isOptimizado ? theme.success : theme.primary)
+                          .withOpacity(0.3),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isOptimizado ? Icons.check_circle : Icons.payment,
+                      color: Colors.white,
+                      size: 13,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      isOptimizado ? 'OPTIMIZADO' : 'NORMAL',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Text(
+                dateTimeFormat(pago.fechaEjecucion!),
+                style: TextStyle(
+                  color: theme.textSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
-          child: Icon(
-            isOptimizado ? Icons.check_circle : Icons.payment,
-            color: Colors.white,
-            size: 20,
-          ),
-        ),
-        const SizedBox(width: 16),
-
-        // Content
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: theme.primaryBackground,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: theme.border.withOpacity(0.3),
-                width: 1,
+          const SizedBox(height: 14),
+          // Info de facturas
+          Row(
+            children: [
+              Icon(
+                Icons.receipt_long,
+                color: theme.textSecondary,
+                size: 16,
               ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              const SizedBox(width: 6),
+              Text(
+                '${pago.facturaIds.length} factura${pago.facturaIds.length != 1 ? 's' : ''}',
+                style: TextStyle(
+                  color: theme.textSecondary,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // Divider sutil
+          Container(
+            height: 1,
+            color: theme.border.withOpacity(0.3),
+          ),
+          const SizedBox(height: 12),
+          // Montos principales
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Monto pagado
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: isOptimizado
-                                  ? theme.success.withOpacity(0.15)
-                                  : theme.textSecondary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                color: isOptimizado
-                                    ? theme.success.withOpacity(0.3)
-                                    : theme.textSecondary.withOpacity(0.2),
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              isOptimizado ? 'OPTIMIZADO' : 'NORMAL',
-                              style: TextStyle(
-                                color: isOptimizado
-                                    ? theme.success
-                                    : theme.textSecondary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            '${pago.facturaIds.length} factura${pago.facturaIds.length != 1 ? 's' : ''}',
-                            style: TextStyle(
-                              color: theme.textSecondary,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     Text(
-                      dateTimeFormat(pago.fechaEjecucion!),
+                      'Monto Pagado',
                       style: TextStyle(
                         color: theme.textSecondary,
                         fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      moneyFormat(pago.montoTotal),
+                      style: TextStyle(
+                        color: theme.textPrimary,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Monto Pagado',
-                          style: TextStyle(
-                            color: theme.textSecondary,
-                            fontSize: 11,
-                          ),
-                        ),
-                        Text(
-                          moneyFormat(pago.montoTotal),
-                          style: TextStyle(
-                            color: theme.textPrimary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+              ),
+              // Ahorro (si existe)
+              if (pago.ahorroGenerado > 0)
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: theme.success.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: theme.success.withOpacity(0.3),
+                      width: 1,
                     ),
-                    if (pago.ahorroGenerado > 0)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Ahorro',
+                        style: TextStyle(
+                          color: theme.success,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Ahorro',
-                            style: TextStyle(
-                              color: theme.textSecondary,
-                              fontSize: 11,
-                            ),
+                          Icon(
+                            Icons.savings,
+                            color: theme.success,
+                            size: 14,
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.savings,
-                                color: theme.success,
-                                size: 14,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                moneyFormat(pago.ahorroGenerado),
-                                style: TextStyle(
-                                  color: theme.success,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          const SizedBox(width: 4),
+                          Text(
+                            moneyFormat(pago.ahorroGenerado),
+                            style: TextStyle(
+                              color: theme.success,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
                         ],
                       ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
+            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

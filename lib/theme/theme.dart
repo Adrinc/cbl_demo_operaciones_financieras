@@ -52,6 +52,28 @@ abstract class AppTheme extends ThemeExtension<AppTheme> {
   Color get textDisabled => hintText;
   Color get accent => tertiaryColor;
 
+  /// ========================================================================
+  /// SISTEMA DE SOMBRAS PREMIUM
+  /// ========================================================================
+  /// Sombras adaptativas que crean profundidad real en light y dark mode
+  /// Inspirado en Bloomberg Terminal y diseños de alto contraste
+  /// ========================================================================
+
+  // Sombra sutil - Para elementos secundarios
+  List<BoxShadow> get shadowSubtle;
+
+  // Sombra media - Para cards y contenedores principales
+  List<BoxShadow> get shadowMedium;
+
+  // Sombra fuerte - Para modales y elementos flotantes
+  List<BoxShadow> get shadowStrong;
+
+  // Sombra premium - Para elementos destacados (KPI cards, hero sections)
+  List<BoxShadow> get shadowPremium;
+
+  // Sombra para hover - Efecto al pasar el mouse
+  List<BoxShadow> get shadowHover;
+
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
   String get title2Family => typography.title2Family;
@@ -78,37 +100,108 @@ abstract class AppTheme extends ThemeExtension<AppTheme> {
 
 class LightModeTheme extends AppTheme {
   @override
-  Color primaryColor = const Color(0xFF0F766E); // Teal profesional
+  Color primaryColor =
+      const Color(0xFF1E3A8A); // Deep Navy Blue - Premium Authority
   @override
-  Color secondaryColor = const Color(0xFFF97316); // Naranja vibrante
+  Color secondaryColor =
+      const Color(0xFF10B981); // Emerald Green - Success & Optimization
   @override
-  Color tertiaryColor = const Color(0xFF06B6D4); // Cyan brillante
+  Color tertiaryColor =
+      const Color(0xFF8B5CF6); // Premium Purple - Accent & Innovation
   @override
-  Color alternate = const Color(0xFFEAB308); // Amarillo dorado
+  Color alternate =
+      const Color(0xFFF59E0B); // Amber Gold - Warnings & Attention
   @override
-  Color primaryBackground = const Color(0xFFF8FAFC); // Fondo claro
+  Color primaryBackground =
+      const Color(0xFFF8FAFC); // Ultra Light Gray - Clean Background
   @override
-  Color secondaryBackground = const Color(0xFFFFFFFF); // Surface blanco
+  Color secondaryBackground =
+      const Color(0xFFFFFFFF); // Pure White - Premium Surfaces
   @override
-  Color tertiaryBackground = const Color(0xFFE2E8F0); // Bordes suaves
+  Color tertiaryBackground =
+      const Color(0xFFE5E7EB); // Light Border - Elegant Separation
   @override
   Color transparentBackground = const Color(0xFF64748B).withOpacity(.08);
   @override
-  Color primaryText = const Color(0xFF0F172A); // Texto oscuro
+  Color primaryText = const Color(0xFF0F172A); // Deep Navy - Maximum Contrast
   @override
-  Color secondaryText = const Color(0xFF475569); // Texto secundario
+  Color secondaryText = const Color(0xFF475569); // Slate Gray - Secondary Info
   @override
-  Color tertiaryText = const Color(0xFF94A3B8); // Texto terciario
+  Color tertiaryText = const Color(0xFF94A3B8); // Light Slate - Tertiary Info
   @override
-  Color hintText = const Color(0xFF94A3B8); // Placeholder
+  Color hintText = const Color(0xFF94A3B8); // Placeholder Text
   @override
-  Color error = const Color(0xFFDC2626); // Rojo error
+  Color error = const Color(0xFFDC2626); // Red - Errors & Losses
   @override
-  Color warning = const Color(0xFFEAB308); // Amarillo warning
+  Color warning = const Color(0xFFF59E0B); // Amber - Attention Required
   @override
-  Color success = const Color(0xFF16A34A); // Verde success
+  Color success = const Color(0xFF10B981); // Emerald - Success & Savings
   @override
-  Color formBackground = const Color(0xFF0F766E).withOpacity(.05);
+  Color formBackground = const Color(0xFF1E3A8A).withOpacity(.05);
+
+  /// ========================================================================
+  /// SOMBRAS LIGHT MODE - Sutiles y elegantes
+  /// ========================================================================
+  @override
+  List<BoxShadow> get shadowSubtle => [
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.04),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowMedium => [
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.08),
+          blurRadius: 16,
+          offset: const Offset(0, 4),
+        ),
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.04),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowStrong => [
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.12),
+          blurRadius: 24,
+          offset: const Offset(0, 8),
+        ),
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.06),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowPremium => [
+        BoxShadow(
+          color: const Color(0xFF1E3A8A).withOpacity(0.15),
+          blurRadius: 32,
+          offset: const Offset(0, 12),
+          spreadRadius: 2,
+        ),
+        BoxShadow(
+          color: const Color(0xFF0F172A).withOpacity(0.08),
+          blurRadius: 16,
+          offset: const Offset(0, 6),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowHover => [
+        BoxShadow(
+          color: const Color(0xFF1E3A8A).withOpacity(0.2),
+          blurRadius: 20,
+          offset: const Offset(0, 8),
+        ),
+      ];
 
   @override
   ThemeExtension<AppTheme> copyWith() => LightModeTheme();
@@ -123,35 +216,120 @@ class LightModeTheme extends AppTheme {
 class DarkModeTheme extends AppTheme {
   @override
   Color primaryColor =
-      const Color(0xFF2DD4BF); // Teal vibrante (como la imagen)
+      const Color(0xFF3B82F6); // Bright Blue - Bloomberg Terminal Inspired
   @override
-  Color secondaryColor = const Color(0xFFF97316); // Naranja vibrante
+  Color secondaryColor =
+      const Color(0xFF34D399); // Light Emerald - Success Glow
   @override
-  Color tertiaryColor = const Color(0xFF22D3EE); // Cyan brillante
+  Color tertiaryColor =
+      const Color(0xFFA78BFA); // Light Purple - Premium Accent
   @override
-  Color alternate = const Color(0xFFFBBF24); // Amarillo dorado
+  Color alternate = const Color(0xFFFBBF24); // Gold Amber - Attention
   @override
-  Color primaryBackground = const Color(0xFF0D1117); // Fondo muy oscuro azulado
+  Color primaryBackground =
+      const Color(0xFF0F172A); // Deep Navy Night - Premium Dark
   @override
-  Color secondaryBackground = const Color(0xFF161B22); // Surface oscuro
+  Color secondaryBackground =
+      const Color(0xFF1E293B); // Slate Surface - Elevated Cards
   @override
-  Color tertiaryBackground = const Color(0xFF30363D); // Bordes sutiles
+  Color tertiaryBackground =
+      const Color(0xFF334155); // Dark Border - Elegant Division
   @override
-  Color transparentBackground = const Color(0xFF30363D).withOpacity(.5);
+  Color transparentBackground = const Color(0xFF334155).withOpacity(.5);
   @override
-  Color primaryText = const Color(0xFFF0F6FC); // Texto casi blanco
+  Color primaryText = const Color(0xFFF1F5F9); // Off-White - Perfect Contrast
   @override
-  Color secondaryText = const Color(0xFF8B949E); // Texto secundario
+  Color secondaryText = const Color(0xFF94A3B8); // Light Slate - Readable
   @override
-  Color tertiaryText = const Color(0xFF6E7681); // Texto terciario
+  Color tertiaryText = const Color(0xFF64748B); // Muted Slate - Subtle Info
   @override
-  Color hintText = const Color(0xFF484F58); // Placeholder oscuro
+  Color hintText = const Color(0xFF64748B); // Placeholder Dark
   @override
-  Color error = const Color(0xFFF87171); // Rojo claro
+  Color error = const Color(0xFFF87171); // Light Red - Clear Error
   @override
-  Color warning = const Color(0xFFFBBF24); // Amarillo brillante
+  Color warning = const Color(0xFFFBBF24); // Gold Amber - High Visibility
   @override
-  Color success = const Color(0xFF34D399); // Verde esmeralda
+  Color success = const Color(0xFF34D399); // Emerald Glow - Achievement
+
+  /// ========================================================================
+  /// SOMBRAS DARK MODE - NEGRAS PROFUNDAS para crear profundidad real
+  /// ========================================================================
+  /// Inspirado en Bloomberg Terminal y diseños premium de alto contraste
+  /// Las sombras DEBEN ser más oscuras que el fondo, no más claras
+  /// ========================================================================
+
+  @override
+  List<BoxShadow> get shadowSubtle => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.3),
+          blurRadius: 12,
+          offset: const Offset(0, 2),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowMedium => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.4),
+          blurRadius: 20,
+          offset: const Offset(0, 4),
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 10,
+          offset: const Offset(0, 2),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowStrong => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.5),
+          blurRadius: 28,
+          offset: const Offset(0, 8),
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.3),
+          blurRadius: 14,
+          offset: const Offset(0, 4),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowPremium => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.6),
+          blurRadius: 36,
+          offset: const Offset(0, 12),
+          spreadRadius: 2,
+        ),
+        BoxShadow(
+          color: Colors.black.withOpacity(0.4),
+          blurRadius: 20,
+          offset: const Offset(0, 6),
+        ),
+        // Sutil glow azul para efecto premium
+        BoxShadow(
+          color: const Color(0xFF3B82F6).withOpacity(0.1),
+          blurRadius: 24,
+          offset: const Offset(0, 8),
+        ),
+      ];
+
+  @override
+  List<BoxShadow> get shadowHover => [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.5),
+          blurRadius: 24,
+          offset: const Offset(0, 8),
+        ),
+        // Glow azul en hover
+        BoxShadow(
+          color: const Color(0xFF3B82F6).withOpacity(0.15),
+          blurRadius: 20,
+          offset: const Offset(0, 6),
+        ),
+      ];
 
   @override
   ThemeExtension<AppTheme> copyWith() => DarkModeTheme();
@@ -163,7 +341,7 @@ class DarkModeTheme extends AppTheme {
   }
 
   @override
-  Color formBackground = const Color(0xFF2DD4BF).withOpacity(.08);
+  Color formBackground = const Color(0xFF3B82F6).withOpacity(.08);
 }
 
 extension TextStyleHelper on TextStyle {

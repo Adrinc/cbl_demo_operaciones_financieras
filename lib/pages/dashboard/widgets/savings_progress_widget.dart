@@ -38,22 +38,16 @@ class SavingsProgressWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            theme.success.withOpacity(0.15),
-            theme.success.withOpacity(0.05),
-          ],
-        ),
+        // 🔥 SIN opacidades ni degradados - color surface puro
+        color: theme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.success.withOpacity(0.3), width: 2),
+        border: Border.all(
+          color: theme.success.withOpacity(0.4),
+          width: 2, // 🔥 Borde prominente
+        ),
+        // 🔥 SOMBRAS PREMIUM - Este es un hero widget
         boxShadow: [
-          BoxShadow(
-            color: theme.success.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
+          ...theme.shadowPremium,
         ],
       ),
       child: Column(
@@ -115,11 +109,12 @@ class SavingsProgressWidget extends StatelessWidget {
               Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: theme.surface.withOpacity(0.5),
+                  color: theme
+                      .primaryBackground, // 🔥 Color sólido - sin difuminación
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: theme.border.withOpacity(0.3),
-                    width: 1,
+                    color: theme.border.withOpacity(0.4),
+                    width: 1.5,
                   ),
                 ),
               ),
@@ -198,7 +193,7 @@ class SavingsProgressWidget extends StatelessWidget {
               color: theme.surface.withOpacity(0.5),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: theme.border.withOpacity(0.3),
+                color: theme.border.withOpacity(0.5), // 🔥 Más visible
                 width: 1,
               ),
             ),

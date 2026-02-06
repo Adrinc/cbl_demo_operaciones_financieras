@@ -50,13 +50,13 @@ class InvoicesStatusChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.primary.withOpacity(0.2)),
+        border: Border.all(
+          color: theme.primary.withOpacity(0.3),
+          width: 1.5, // 🔥 Borde más grueso
+        ),
+        // 🔥 SOMBRAS PREMIUM
         boxShadow: [
-          BoxShadow(
-            color: theme.primary.withOpacity(0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
+          ...theme.shadowMedium,
         ],
       ),
       child: Column(
@@ -102,44 +102,48 @@ class InvoicesStatusChart extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
+          // 🔥 Bar Chart Horizontal - más claro que Pie Chart
           SizedBox(
             height: isMobile ? 250 : 300,
-            child: SfCircularChart(
-              legend: Legend(
-                isVisible: true,
-                position: LegendPosition.bottom,
-                overflowMode: LegendItemOverflowMode.wrap,
-                textStyle: TextStyle(
+            child: SfCartesianChart(
+              plotAreaBorderWidth: 0,
+              primaryXAxis: CategoryAxis(
+                labelStyle: TextStyle(
+                  color: theme.textSecondary,
+                  fontSize: isMobile ? 10 : 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                majorGridLines: const MajorGridLines(width: 0),
+                axisLine: const AxisLine(width: 0),
+              ),
+              primaryYAxis: NumericAxis(
+                labelStyle: TextStyle(
                   color: theme.textSecondary,
                   fontSize: isMobile ? 10 : 12,
                 ),
+                majorGridLines: MajorGridLines(
+                  color: theme.border.withOpacity(0.3),
+                  dashArray: const <double>[5, 5],
+                ),
+                axisLine: const AxisLine(width: 0),
               ),
-              series: <CircularSeries>[
-                DoughnutSeries<_ChartData, String>(
+              series: <CartesianSeries<_ChartData, String>>[
+                BarSeries<_ChartData, String>(
                   dataSource: chartData,
                   xValueMapper: (_ChartData data, _) => data.categoria,
                   yValueMapper: (_ChartData data, _) => data.valor,
                   pointColorMapper: (_ChartData data, _) => data.color,
                   dataLabelSettings: DataLabelSettings(
                     isVisible: true,
-                    labelPosition: ChartDataLabelPosition.outside,
-                    connectorLineSettings: ConnectorLineSettings(
-                      color: theme.textSecondary.withOpacity(0.5),
-                      width: 1,
-                    ),
                     textStyle: TextStyle(
-                      color: theme.textPrimary,
+                      color: theme.surface,
                       fontSize: isMobile ? 10 : 12,
                       fontWeight: FontWeight.bold,
                     ),
+                    labelAlignment: ChartDataLabelAlignment.middle,
                   ),
-                  dataLabelMapper: (_ChartData data, _) =>
-                      '${data.valor.toInt()}',
-                  innerRadius: '60%',
-                  explode: true,
-                  explodeOffset: '3%',
-                  strokeColor: theme.surface,
-                  strokeWidth: 2,
+                  borderRadius: BorderRadius.circular(6),
+                  spacing: 0.2,
                 ),
               ],
               tooltipBehavior: TooltipBehavior(
