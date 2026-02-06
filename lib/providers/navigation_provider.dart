@@ -23,4 +23,52 @@ class NavigationProvider extends ChangeNotifier {
   bool isRouteActive(String route) {
     return _currentRoute == route;
   }
+
+  /// Obtiene el título de la página actual
+  String getPageTitle() {
+    switch (_currentRoute) {
+      case Routes.dashboard:
+        return 'Dashboard Financiero';
+      case Routes.facturas:
+        return 'Gestión de Facturas';
+      case Routes.optimizacion:
+        return 'Optimización de Pagos';
+      case Routes.simulador:
+        return 'Simulador de Escenarios';
+      case Routes.validaciones:
+        return 'Validación y Control';
+      case Routes.proveedores:
+        return 'Gestión de Proveedores';
+      case Routes.reportes:
+        return 'Reportes y Ahorro';
+      case Routes.configuracion:
+        return 'Configuración del Ejercicio';
+      default:
+        return 'ARXIS';
+    }
+  }
+
+  /// Obtiene el ícono de la página actual
+  IconData getPageIcon() {
+    switch (_currentRoute) {
+      case Routes.dashboard:
+        return Icons.dashboard_outlined;
+      case Routes.facturas:
+        return Icons.receipt_long;
+      case Routes.optimizacion:
+        return Icons.trending_up;
+      case Routes.simulador:
+        return Icons.science_outlined;
+      case Routes.validaciones:
+        return Icons.check_circle_outline;
+      case Routes.proveedores:
+        return Icons.business;
+      case Routes.reportes:
+        return Icons.bar_chart;
+      case Routes.configuracion:
+        return Icons.settings;
+      default:
+        return Icons.error_outline;
+    }
+  }
 }

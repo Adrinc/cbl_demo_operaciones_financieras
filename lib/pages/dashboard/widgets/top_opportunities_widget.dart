@@ -6,6 +6,7 @@ import 'package:facturacion_demo/providers/factura_provider.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/functions/money_format.dart';
 import 'package:facturacion_demo/functions/percentage_format.dart';
+import 'package:facturacion_demo/functions/proveedor_logo.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
@@ -225,6 +226,36 @@ class TopOpportunitiesWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+
+              // Logo del proveedor
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: theme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: theme.border.withOpacity(0.3),
+                    width: 1,
+                  ),
+                ),
+                padding: const EdgeInsets.all(4),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.asset(
+                    getProveedorLogoPath(factura.proveedorNombre),
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.business,
+                        color: theme.textSecondary,
+                        size: 20,
+                      );
+                    },
                   ),
                 ),
               ),

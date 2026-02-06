@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:facturacion_demo/providers/theme_provider.dart';
+import 'package:facturacion_demo/providers/navigation_provider.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/widgets/chatbot/ai_assistant_dialog.dart';
@@ -31,6 +32,7 @@ class PageHeader extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final isMobile = size.width <= mobileSize;
     final themeProvider = context.watch<ThemeProvider>();
+    final navigationProvider = context.watch<NavigationProvider>();
     final theme = Theme.of(context).extension<AppTheme>()!;
 
     return Container(
@@ -91,14 +93,14 @@ class PageHeader extends StatelessWidget {
                     ),
                   ),
                   child: Icon(
-                    Icons.trending_up,
+                    navigationProvider.getPageIcon(),
                     color: theme.primary,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Optimización de Pagos',
+                  navigationProvider.getPageTitle(),
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

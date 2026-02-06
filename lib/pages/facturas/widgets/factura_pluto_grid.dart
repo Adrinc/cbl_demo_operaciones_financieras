@@ -327,6 +327,7 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
               disabledIconColor: theme.textDisabled,
               menuBackgroundColor: theme.surface,
               columnHeight: 48,
+              rowHeight: 75,
               cellColorInReadOnlyState: theme.surface,
             ),
             columnSize: const PlutoGridColumnSizeConfig(

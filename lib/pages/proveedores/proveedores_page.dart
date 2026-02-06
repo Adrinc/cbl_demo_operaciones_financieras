@@ -6,6 +6,7 @@ import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/pages/proveedores/widgets/proveedor_pluto_grid.dart';
 import 'package:facturacion_demo/pages/proveedores/widgets/proveedor_form.dart';
+import 'package:facturacion_demo/functions/proveedor_logo.dart';
 
 /// ============================================================================
 /// PROVEEDORES PAGE
@@ -337,13 +338,36 @@ class _ProveedoresPageState extends State<ProveedoresPage> {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: theme.primary.withOpacity(0.15),
-                        child: Text(
-                          proveedor.nombre.substring(0, 1).toUpperCase(),
-                          style: TextStyle(
-                            color: theme.primary,
-                            fontWeight: FontWeight.w600,
+                      Container(
+                        width: 56,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          color: theme.primaryBackground,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: theme.border.withOpacity(0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            getProveedorLogoPath(proveedor.nombre),
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child: Text(
+                                  proveedor.nombre
+                                      .substring(0, 1)
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                    color: theme.primary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -505,15 +529,34 @@ class _ProveedoresPageState extends State<ProveedoresPage> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: theme.primary.withOpacity(0.15),
-                    child: Text(
-                      proveedor.nombre.substring(0, 1).toUpperCase(),
-                      style: TextStyle(
-                        color: theme.primary,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: theme.primaryBackground,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: theme.border.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        getProveedorLogoPath(proveedor.nombre),
+                        fit: BoxFit.fill,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                            child: Text(
+                              proveedor.nombre.substring(0, 1).toUpperCase(),
+                              style: TextStyle(
+                                color: theme.primary,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),

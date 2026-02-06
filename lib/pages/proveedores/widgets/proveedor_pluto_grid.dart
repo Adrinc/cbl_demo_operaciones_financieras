@@ -4,6 +4,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
+import 'package:facturacion_demo/functions/proveedor_logo.dart';
 
 /// ============================================================================
 /// PROVEEDOR PLUTO GRID
@@ -79,7 +80,7 @@ class _ProveedorPlutoGridState extends State<ProveedorPlutoGrid> {
               cellColorInEditState: theme.primaryBackground,
               cellColorInReadOnlyState: theme.surface,
               columnHeight: 50,
-              rowHeight: 56,
+              rowHeight: 75,
               defaultColumnTitlePadding: const EdgeInsets.all(16),
               defaultCellPadding: const EdgeInsets.all(12),
             ),
@@ -116,19 +117,32 @@ class _ProveedorPlutoGridState extends State<ProveedorPlutoGrid> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               children: [
+                // Logo del proveedor (circular)
                 CircleAvatar(
-                  radius: 16,
+                  radius: 18,
                   backgroundColor: theme.primary.withOpacity(0.15),
-                  child: Text(
-                    proveedor.nombre.substring(0, 1).toUpperCase(),
-                    style: TextStyle(
-                      color: theme.primary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                  child: ClipOval(
+                    child: Image.asset(
+                      getProveedorLogoPath(proveedor.nombre),
+                      width: 75,
+                      height: 75,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Center(
+                          child: Text(
+                            proveedor.nombre.substring(0, 1).toUpperCase(),
+                            style: TextStyle(
+                              color: theme.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     proveedor.nombre,
