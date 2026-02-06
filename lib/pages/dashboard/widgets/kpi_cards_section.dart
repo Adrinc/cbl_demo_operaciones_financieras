@@ -53,7 +53,7 @@ class KPICardsSection extends StatelessWidget {
               title: 'Total Facturas',
               value: totalFacturas.toString(),
               subtitle: 'Ejercicio $ejercicioFiscal',
-              color: const Color(0xFF1E3A8A),
+              color: const Color(0xFF5885FF),
               isCompact: true,
             ),
           ),
@@ -113,7 +113,7 @@ class KPICardsSection extends StatelessWidget {
                 title: 'Total Facturas',
                 value: totalFacturas.toString(),
                 subtitle: 'Ejercicio $ejercicioFiscal',
-                color: const Color(0xFF1E3A8A),
+                color: const Color(0xFF5885FF),
               ),
             ),
             SizedBox(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/providers/factura_provider.dart';
+import 'package:facturacion_demo/providers/navigation_provider.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/functions/date_format.dart';
@@ -233,7 +234,12 @@ class AlertsWidget extends StatelessWidget {
           if (facturas.length > 5) ...[
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () => context.go(Routes.facturas),
+              onPressed: () {
+                context
+                    .read<NavigationProvider>()
+                    .setCurrentRoute(Routes.facturas);
+                context.go(Routes.facturas);
+              },
               child: Text(
                 'Ver todas las ${facturas.length} facturas con DPP por vencer',
                 style: theme.bodyText2.override(

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/providers/factura_provider.dart';
+import 'package:facturacion_demo/providers/navigation_provider.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/functions/money_format.dart';
 import 'package:facturacion_demo/functions/percentage_format.dart';
@@ -54,48 +55,60 @@ class TopOpportunitiesWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          theme.secondary.withOpacity(0.2),
-                          theme.secondary.withOpacity(0.1),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            theme.secondary.withOpacity(0.2),
+                            theme.secondary.withOpacity(0.1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(Icons.star, color: theme.secondary, size: 24),
+                    ),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Top Oportunidades',
+                            style: TextStyle(
+                              color: theme.textPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'Mayor potencial de ahorro',
+                            style: TextStyle(
+                              color: theme.textSecondary,
+                              fontSize: 12,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Icon(Icons.star, color: theme.secondary, size: 24),
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Top Oportunidades',
-                        style: TextStyle(
-                          color: theme.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Mayor potencial de ahorro',
-                        style: TextStyle(
-                          color: theme.textSecondary,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () => context.go(Routes.optimizacion),
+                  onTap: () {
+                    context
+                        .read<NavigationProvider>()
+                        .setCurrentRoute(Routes.optimizacion);
+                    context.go(Routes.optimizacion);
+                  },
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -190,7 +203,10 @@ class TopOpportunitiesWidget extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => context.go(Routes.facturas),
+        onTap: () {
+          context.read<NavigationProvider>().setCurrentRoute(Routes.facturas);
+          context.go(Routes.facturas);
+        },
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(

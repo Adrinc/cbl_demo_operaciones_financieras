@@ -100,13 +100,16 @@ class SavingsChart extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
-                'Tendencia de Ahorro Acumulado',
-                style: theme.subtitle2.override(
-                  fontFamily: theme.subtitle2Family,
-                  fontSize: isMobile ? 16 : 20,
-                  fontWeight: FontWeight.w600,
-                  color: theme.primaryText,
+              Expanded(
+                child: Text(
+                  'Tendencia de Ahorro Acumulado',
+                  style: theme.subtitle2.override(
+                    fontFamily: theme.subtitle2Family,
+                    fontSize: isMobile ? 14 : 20,
+                    fontWeight: FontWeight.w600,
+                    color: theme.primaryText,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

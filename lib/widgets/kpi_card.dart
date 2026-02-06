@@ -43,8 +43,8 @@ class KPICard extends StatelessWidget {
     final iconBoxSize = isCompact ? 40.0 : (isMobile ? 48.0 : 56.0);
     final iconSize = isCompact ? 22.0 : (isMobile ? 26.0 : 30.0);
     // 🔥 Tamaños aumentados para mejor legibilidad
-    final titleSize = isCompact ? 13.0 : (isMobile ? 14.5 : 14.0);
-    final valueSize = isCompact ? 20.0 : (isMobile ? 24.0 : 28.0);
+    final titleSize = isCompact ? 16.0 : (isMobile ? 14.5 : 18.0);
+    final valueSize = isCompact ? 18.0 : (isMobile ? 22.0 : 26.0);
     final subtitleSize = isCompact ? 11.5 : 12.0;
     final verticalSpacing = isCompact ? 8.0 : (isMobile ? 14.0 : 18.0);
 

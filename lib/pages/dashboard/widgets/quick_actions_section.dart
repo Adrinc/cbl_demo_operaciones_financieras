@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:facturacion_demo/theme/theme.dart';
+import 'package:facturacion_demo/providers/navigation_provider.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 
 /// ============================================================================
@@ -67,9 +69,9 @@ class QuickActionsSection extends StatelessWidget {
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              childAspectRatio: 0.95,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 1.15,
               children: [
                 _buildActionButton(
                   context: context,
@@ -78,7 +80,12 @@ class QuickActionsSection extends StatelessWidget {
                   title: 'Optimizar Pagos',
                   subtitle: 'Mejores oportunidades',
                   color: theme.secondary,
-                  onTap: () => context.go(Routes.optimizacion),
+                  onTap: () {
+                    context
+                        .read<NavigationProvider>()
+                        .setCurrentRoute(Routes.optimizacion);
+                    context.go(Routes.optimizacion);
+                  },
                 ),
                 _buildActionButton(
                   context: context,
@@ -87,7 +94,12 @@ class QuickActionsSection extends StatelessWidget {
                   title: 'Ver Facturas',
                   subtitle: 'Gestiona pendientes',
                   color: theme.primary,
-                  onTap: () => context.go(Routes.facturas),
+                  onTap: () {
+                    context
+                        .read<NavigationProvider>()
+                        .setCurrentRoute(Routes.facturas);
+                    context.go(Routes.facturas);
+                  },
                 ),
                 _buildActionButton(
                   context: context,
@@ -96,7 +108,12 @@ class QuickActionsSection extends StatelessWidget {
                   title: 'Simulador',
                   subtitle: 'Prueba estrategias',
                   color: theme.accent,
-                  onTap: () => context.go(Routes.simulador),
+                  onTap: () {
+                    context
+                        .read<NavigationProvider>()
+                        .setCurrentRoute(Routes.simulador);
+                    context.go(Routes.simulador);
+                  },
                 ),
                 _buildActionButton(
                   context: context,
@@ -105,7 +122,12 @@ class QuickActionsSection extends StatelessWidget {
                   title: 'Reportes',
                   subtitle: 'Análisis detallado',
                   color: theme.warning,
-                  onTap: () => context.go(Routes.reportes),
+                  onTap: () {
+                    context
+                        .read<NavigationProvider>()
+                        .setCurrentRoute(Routes.reportes);
+                    context.go(Routes.reportes);
+                  },
                 ),
               ],
             )
@@ -120,7 +142,12 @@ class QuickActionsSection extends StatelessWidget {
                     title: 'Optimizar Pagos',
                     subtitle: 'Encuentra las mejores oportunidades',
                     color: theme.secondary,
-                    onTap: () => context.go(Routes.optimizacion),
+                    onTap: () {
+                      context
+                          .read<NavigationProvider>()
+                          .setCurrentRoute(Routes.optimizacion);
+                      context.go(Routes.optimizacion);
+                    },
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -132,7 +159,12 @@ class QuickActionsSection extends StatelessWidget {
                     title: 'Ver Facturas',
                     subtitle: 'Gestiona facturas pendientes',
                     color: theme.primary,
-                    onTap: () => context.go(Routes.facturas),
+                    onTap: () {
+                      context
+                          .read<NavigationProvider>()
+                          .setCurrentRoute(Routes.facturas);
+                      context.go(Routes.facturas);
+                    },
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -144,7 +176,12 @@ class QuickActionsSection extends StatelessWidget {
                     title: 'Simular Escenarios',
                     subtitle: 'Prueba diferentes estrategias',
                     color: theme.accent,
-                    onTap: () => context.go(Routes.simulador),
+                    onTap: () {
+                      context
+                          .read<NavigationProvider>()
+                          .setCurrentRoute(Routes.simulador);
+                      context.go(Routes.simulador);
+                    },
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -156,7 +193,12 @@ class QuickActionsSection extends StatelessWidget {
                     title: 'Ver Reportes',
                     subtitle: 'Análisis detallado de ahorro',
                     color: theme.warning,
-                    onTap: () => context.go(Routes.reportes),
+                    onTap: () {
+                      context
+                          .read<NavigationProvider>()
+                          .setCurrentRoute(Routes.reportes);
+                      context.go(Routes.reportes);
+                    },
                   ),
                 ),
               ],
@@ -175,12 +217,14 @@ class QuickActionsSection extends StatelessWidget {
     required Color color,
     required VoidCallback onTap,
   }) {
+    final isMobile = MediaQuery.of(context).size.width < mobileSize;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(isMobile ? 12 : 20),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -200,7 +244,7 @@ class QuickActionsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(isMobile ? 8 : 12),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [color, color.withOpacity(0.8)],
@@ -214,24 +258,29 @@ class QuickActionsSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Icon(icon, color: Colors.white, size: 28),
+                child:
+                    Icon(icon, color: Colors.white, size: isMobile ? 22 : 28),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 title,
                 style: TextStyle(
                   color: theme.textPrimary,
-                  fontSize: 16,
+                  fontSize: isMobile ? 13 : 16,
                   fontWeight: FontWeight.bold,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 subtitle,
                 style: TextStyle(
                   color: theme.textSecondary,
-                  fontSize: 13,
+                  fontSize: isMobile ? 11 : 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
