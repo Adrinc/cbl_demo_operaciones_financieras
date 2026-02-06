@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 /// Modelo de Proveedor (Supplier)
 class Proveedor {
   final String id;
@@ -11,6 +13,9 @@ class Proveedor {
   final String contacto;
   final String email;
   final String estado; // 'activo' | 'inactivo'
+  final String?
+      logo; // Logo filename (e.g., 'nexus.png') - for predefined logos
+  final Uint8List? logoBytes; // Custom uploaded logo bytes
 
   Proveedor({
     required this.id,
@@ -24,6 +29,8 @@ class Proveedor {
     required this.contacto,
     required this.email,
     required this.estado,
+    this.logo,
+    this.logoBytes,
   });
 
   Proveedor copyWith({
@@ -38,6 +45,8 @@ class Proveedor {
     String? contacto,
     String? email,
     String? estado,
+    String? logo,
+    Uint8List? logoBytes,
   }) {
     return Proveedor(
       id: id ?? this.id,
@@ -51,6 +60,8 @@ class Proveedor {
       contacto: contacto ?? this.contacto,
       email: email ?? this.email,
       estado: estado ?? this.estado,
+      logo: logo ?? this.logo,
+      logoBytes: logoBytes ?? this.logoBytes,
     );
   }
 
@@ -67,6 +78,7 @@ class Proveedor {
       'contacto': contacto,
       'email': email,
       'estado': estado,
+      'logo': logo,
     };
   }
 
@@ -83,6 +95,7 @@ class Proveedor {
       contacto: json['contacto'],
       email: json['email'],
       estado: json['estado'],
+      logo: json['logo'],
     );
   }
 }

@@ -35,11 +35,13 @@ class _CreditNoteFormDialogState extends State<CreditNoteFormDialog> {
         .toList();
 
     return Dialog(
+      backgroundColor: theme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
+      elevation: 24,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 600),
+        constraints: const BoxConstraints(maxWidth: 650, maxHeight: 750),
         padding: const EdgeInsets.all(24),
         child: Form(
           key: _formKey,
@@ -287,20 +289,36 @@ class _CreditNoteFormDialogState extends State<CreditNoteFormDialog> {
                     ),
                   ),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         Icons.info_outline,
                         color: theme.accent,
-                        size: 20,
+                        size: 22,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Text(
-                          'La nota de crédito se creará en estado "Pendiente" y requerirá aprobación.',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: theme.textSecondary,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '¿Qué es una Nota de Crédito?',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: theme.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Documento que ajusta el monto de una factura (devoluciones, descuentos, correcciones). Se crea en estado "Pendiente" y requiere aprobación antes de aplicarse.',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: theme.textSecondary,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

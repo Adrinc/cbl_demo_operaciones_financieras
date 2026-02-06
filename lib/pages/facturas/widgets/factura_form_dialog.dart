@@ -80,32 +80,50 @@ class _FacturaFormDialogState extends State<FacturaFormDialog> {
     return Dialog(
       backgroundColor: theme.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Container(
         width: 600,
         constraints: const BoxConstraints(maxHeight: 700),
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border.withOpacity(0.5), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: theme.textPrimary.withOpacity(0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: theme.border.withOpacity(0.3)),
+                ),
+              ),
+              child: Row(
                 children: [
                   Icon(
-                    widget.factura == null ? Icons.add : Icons.edit,
+                    widget.factura == null
+                        ? Icons.add_rounded
+                        : Icons.edit_rounded,
                     color: theme.primary,
-                    size: 28,
+                    size: 24,
                   ),
                   const SizedBox(width: 12),
                   Text(
                     widget.factura == null ? 'Nueva Factura' : 'Editar Factura',
                     style: theme.subtitle1.override(
                       fontFamily: theme.subtitle1Family,
-                      fontSize: 24,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
                       color: theme.primaryText,
                     ),
                   ),
@@ -113,14 +131,23 @@ class _FacturaFormDialogState extends State<FacturaFormDialog> {
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
                     icon: Icon(Icons.close, color: theme.textSecondary),
+                    style: IconButton.styleFrom(
+                      backgroundColor: theme.primaryBackground,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+            ),
 
-              // Form fields
-              Expanded(
+            // Form Content
+            Expanded(
+              child: Form(
+                key: _formKey,
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -486,15 +513,29 @@ class _FacturaFormDialogState extends State<FacturaFormDialog> {
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 24),
-
-              // Actions
-              Row(
+            // Actions
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: theme.border.withOpacity(0.3)),
+                ),
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: theme.border),
+                      ),
+                    ),
                     child: const Text('Cancelar'),
                   ),
                   const SizedBox(width: 12),
@@ -507,13 +548,17 @@ class _FacturaFormDialogState extends State<FacturaFormDialog> {
                         horizontal: 24,
                         vertical: 12,
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
                     ),
                     child: Text(widget.factura == null ? 'Crear' : 'Guardar'),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

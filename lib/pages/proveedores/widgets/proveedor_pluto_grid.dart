@@ -40,12 +40,12 @@ class _ProveedorPlutoGridState extends State<ProveedorPlutoGrid> {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.border, width: 1),
+        border: Border.all(color: theme.border.withOpacity(0.5), width: 1),
         boxShadow: [
           BoxShadow(
-            color: theme.textPrimary.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: theme.textPrimary.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -63,7 +63,8 @@ class _ProveedorPlutoGridState extends State<ProveedorPlutoGrid> {
             style: PlutoGridStyleConfig(
               gridBackgroundColor: theme.surface,
               rowColor: theme.surface,
-              activatedColor: theme.primary.withOpacity(0.1),
+              oddRowColor: theme.primaryBackground.withOpacity(0.5),
+              activatedColor: theme.primary.withOpacity(0.08),
               gridBorderColor: theme.border,
               borderColor: theme.border,
               activatedBorderColor: theme.primary,
@@ -122,24 +123,33 @@ class _ProveedorPlutoGridState extends State<ProveedorPlutoGrid> {
                   radius: 18,
                   backgroundColor: theme.primary.withOpacity(0.15),
                   child: ClipOval(
-                    child: Image.asset(
-                      getProveedorLogoPath(proveedor.nombre),
-                      width: 75,
-                      height: 75,
-                      fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Center(
-                          child: Text(
-                            proveedor.nombre.substring(0, 1).toUpperCase(),
-                            style: TextStyle(
-                              color: theme.primary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
+                    child: proveedor.logoBytes != null
+                        ? Image.memory(
+                            proveedor.logoBytes!,
+                            width: 36,
+                            height: 36,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            getProveedorLogoPath(proveedor.nombre),
+                            width: 36,
+                            height: 36,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child: Text(
+                                  proveedor.nombre
+                                      .substring(0, 1)
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                    color: theme.primary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
                   ),
                 ),
                 const SizedBox(width: 12),

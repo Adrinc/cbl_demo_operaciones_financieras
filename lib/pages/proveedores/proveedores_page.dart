@@ -136,82 +136,152 @@ class _ProveedoresPageState extends State<ProveedoresPage> {
           ),
           const SizedBox(height: 16),
 
-          // Filtros en grid
-          Wrap(
-            spacing: 16,
-            runSpacing: 12,
-            children: [
-              // Búsqueda
-              SizedBox(
-                width: isMobile ? double.infinity : 250,
-                child: TextField(
-                  onChanged: (value) => setState(() => _searchQuery = value),
-                  decoration: InputDecoration(
-                    hintText: 'Buscar proveedor...',
-                    prefixIcon: Icon(Icons.search, color: theme.textSecondary),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: theme.border),
+          // Filtros en fila (desktop) o columna (mobile)
+          if (!isMobile)
+            Row(
+              children: [
+                // Búsqueda
+                Expanded(
+                  flex: 2,
+                  child: TextField(
+                    onChanged: (value) => setState(() => _searchQuery = value),
+                    decoration: InputDecoration(
+                      hintText: 'Buscar proveedor...',
+                      prefixIcon:
+                          Icon(Icons.search, color: theme.textSecondary),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: theme.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: theme.border),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: theme.primary, width: 2),
+                      ),
+                      filled: true,
+                      fillColor: theme.primaryBackground,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 14),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: theme.border),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: theme.primary, width: 2),
-                    ),
-                    filled: true,
-                    fillColor: theme.primaryBackground,
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
                   ),
                 ),
-              ),
+                const SizedBox(width: 12),
+                // Filtro de Esquema
+                Expanded(
+                  child: _buildDropdownFilter(
+                    'Esquema',
+                    _filterEsquema,
+                    [
+                      {'value': 'todos', 'label': 'Todos'},
+                      {'value': EsquemaPago.push, 'label': 'PUSH'},
+                      {'value': EsquemaPago.pull, 'label': 'PULL'},
+                    ],
+                    (value) => setState(() => _filterEsquema = value!),
+                    theme,
+                    isMobile,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Filtro de DPP
+                Expanded(
+                  child: _buildDropdownFilter(
+                    'DPP',
+                    _filterDPP,
+                    [
+                      {'value': 'todos', 'label': 'Todos'},
+                      {'value': 'con_dpp', 'label': 'Con DPP'},
+                      {'value': 'sin_dpp', 'label': 'Sin DPP'},
+                    ],
+                    (value) => setState(() => _filterDPP = value!),
+                    theme,
+                    isMobile,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Filtro de Estado
+                Expanded(
+                  child: _buildDropdownFilter(
+                    'Estado',
+                    _filterEstado,
+                    [
+                      {'value': 'todos', 'label': 'Todos'},
+                      {'value': 'activo', 'label': 'Activos'},
+                      {'value': 'inactivo', 'label': 'Inactivos'},
+                    ],
+                    (value) => setState(() => _filterEstado = value!),
+                    theme,
+                    isMobile,
+                  ),
+                ),
+              ],
+            ),
 
-              // Filtro de Esquema
-              _buildDropdownFilter(
-                'Esquema',
-                _filterEsquema,
-                [
-                  {'value': 'todos', 'label': 'Todos'},
-                  {'value': EsquemaPago.push, 'label': 'PUSH NC-Pago'},
-                  {'value': EsquemaPago.pull, 'label': 'PULL NC-Pago'},
-                ],
-                (value) => setState(() => _filterEsquema = value!),
-                theme,
-                isMobile,
+          // Móvil: Filtros en columna
+          if (isMobile) ...[
+            TextField(
+              onChanged: (value) => setState(() => _searchQuery = value),
+              decoration: InputDecoration(
+                hintText: 'Buscar proveedor...',
+                prefixIcon: Icon(Icons.search, color: theme.textSecondary),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                filled: true,
+                fillColor: theme.primaryBackground,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-
-              // Filtro de DPP
-              _buildDropdownFilter(
-                'DPP',
-                _filterDPP,
-                [
-                  {'value': 'todos', 'label': 'Todos'},
-                  {'value': 'con_dpp', 'label': 'Con DPP'},
-                  {'value': 'sin_dpp', 'label': 'Sin DPP'},
-                ],
-                (value) => setState(() => _filterDPP = value!),
-                theme,
-                isMobile,
-              ),
-
-              // Filtro de Estado
-              _buildDropdownFilter(
-                'Estado',
-                _filterEstado,
-                [
-                  {'value': 'todos', 'label': 'Todos'},
-                  {'value': 'activo', 'label': 'Activos'},
-                  {'value': 'inactivo', 'label': 'Inactivos'},
-                ],
-                (value) => setState(() => _filterEstado = value!),
-                theme,
-                isMobile,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildDropdownFilter(
+                      'Esquema',
+                      _filterEsquema,
+                      [
+                        {'value': 'todos', 'label': 'Todos'},
+                        {'value': EsquemaPago.push, 'label': 'PUSH'},
+                        {'value': EsquemaPago.pull, 'label': 'PULL'},
+                      ],
+                      (value) => setState(() => _filterEsquema = value!),
+                      theme,
+                      isMobile),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildDropdownFilter(
+                      'DPP',
+                      _filterDPP,
+                      [
+                        {'value': 'todos', 'label': 'Todos'},
+                        {'value': 'con_dpp', 'label': 'Con DPP'},
+                        {'value': 'sin_dpp', 'label': 'Sin DPP'},
+                      ],
+                      (value) => setState(() => _filterDPP = value!),
+                      theme,
+                      isMobile),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildDropdownFilter(
+                      'Estado',
+                      _filterEstado,
+                      [
+                        {'value': 'todos', 'label': 'Todos'},
+                        {'value': 'activo', 'label': 'Activos'},
+                        {'value': 'inactivo', 'label': 'Inactivos'},
+                      ],
+                      (value) => setState(() => _filterEstado = value!),
+                      theme,
+                      isMobile),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -542,22 +612,29 @@ class _ProveedoresPageState extends State<ProveedoresPage> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        getProveedorLogoPath(proveedor.nombre),
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Center(
-                            child: Text(
-                              proveedor.nombre.substring(0, 1).toUpperCase(),
-                              style: TextStyle(
-                                color: theme.primary,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                              ),
+                      child: proveedor.logoBytes != null
+                          ? Image.memory(
+                              proveedor.logoBytes!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              getProveedorLogoPath(proveedor.nombre),
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Center(
+                                  child: Text(
+                                    proveedor.nombre
+                                        .substring(0, 1)
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                      color: theme.primary,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
                   const SizedBox(width: 16),

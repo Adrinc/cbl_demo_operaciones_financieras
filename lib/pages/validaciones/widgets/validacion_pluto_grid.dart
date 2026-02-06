@@ -61,14 +61,27 @@ class _ValidacionPlutoGridState extends State<ValidacionPlutoGrid> {
           },
           createFooter: (stateManager) {
             return PlutoLazyPagination(
-              pageSizeToMove: 10,
+              pageSizeToMove: 15,
               fetch: (PlutoLazyPaginationRequest request) async {
-                final filterRows = widget.validaciones
-                    .map((v) => _buildRow(v, theme))
-                    .toList();
+                // Paginación correcta
+                final page = request.page;
+                const pageSize = 15;
+                final startIndex = (page - 1) * pageSize;
+                final endIndex = (startIndex + pageSize)
+                    .clamp(0, widget.validaciones.length)
+                    .toInt();
+
+                final pageValidaciones = widget.validaciones.sublist(
+                  startIndex.clamp(0, widget.validaciones.length).toInt(),
+                  endIndex,
+                );
+
+                final rows =
+                    pageValidaciones.map((v) => _buildRow(v, theme)).toList();
+
                 return Future.value(PlutoLazyPaginationResponse(
-                  totalPage: (filterRows.length / 10).ceil(),
-                  rows: filterRows,
+                  totalPage: (widget.validaciones.length / pageSize).ceil(),
+                  rows: rows,
                 ));
               },
               stateManager: stateManager,

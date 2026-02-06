@@ -111,10 +111,11 @@ class _ValidacionesPageState extends State<ValidacionesPage>
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Gestión de notas de crédito, estados de pago y condiciones comerciales',
+                            'Aprueba o rechaza notas de crédito, verifica estados de pago y valida condiciones comerciales antes de ejecutar pagos',
                             style: TextStyle(
                               fontSize: 14,
                               color: theme.textSecondary,
+                              height: 1.4,
                             ),
                           ),
                         ],
@@ -138,6 +139,65 @@ class _ValidacionesPageState extends State<ValidacionesPage>
                         ),
                       ),
                   ],
+                ),
+                const SizedBox(height: 20),
+
+                // Información contextual
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.accent.withOpacity(0.1),
+                        theme.secondary.withOpacity(0.05),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: theme.accent.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: theme.accent.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          Icons.help_outline,
+                          color: theme.accent,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '¿Para qué sirve esta pantalla?',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: theme.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Antes de ejecutar pagos, es necesario verificar ajustes pendientes: notas de crédito (devoluciones/descuentos), estados de pago (confirmaciones bancarias) y condiciones comerciales (cambios en acuerdos). Aquí apruebas o rechazas estas validaciones.',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: theme.textSecondary,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
 

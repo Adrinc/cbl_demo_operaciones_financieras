@@ -36,7 +36,8 @@ class _FacturaMobileCardsState extends State<FacturaMobileCards> {
     final endIndex = (startIndex + _itemsPerPage).clamp(0, facturas.length);
     final currentPageFacturas = facturas.sublist(startIndex, endIndex);
 
-    return Column(
+    return ListView(
+      padding: EdgeInsets.zero,
       children: [
         // Header con contador
         Container(
@@ -194,6 +195,7 @@ class _FacturaMobileCardsState extends State<FacturaMobileCards> {
               ],
             ),
           ),
+        const SizedBox(height: 16),
       ],
     );
   }

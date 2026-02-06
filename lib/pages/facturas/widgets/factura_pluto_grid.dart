@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:provider/provider.dart';
 import 'package:facturacion_demo/providers/factura_provider.dart';
+import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/widgets/status_badge.dart';
@@ -15,7 +16,18 @@ import 'package:facturacion_demo/functions/date_format.dart';
 /// ============================================================================
 
 class FacturaPlutoGrid extends StatefulWidget {
-  const FacturaPlutoGrid({super.key});
+  final String filterEstado;
+  final String filterEsquema;
+  final String filterProveedor;
+  final String searchQuery;
+
+  const FacturaPlutoGrid({
+    super.key,
+    this.filterEstado = 'todos',
+    this.filterEsquema = 'todos',
+    this.filterProveedor = 'todos',
+    this.searchQuery = '',
+  });
 
   @override
   State<FacturaPlutoGrid> createState() => _FacturaPlutoGridState();
@@ -29,7 +41,32 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
     final theme = AppTheme.of(context);
     final themeMode = Theme.of(context).brightness;
     final facturaProvider = context.watch<FacturaProvider>();
-    final facturas = facturaProvider.facturas;
+
+    // Aplicar filtros
+    List<Factura> facturas = facturaProvider.facturas.where((f) {
+      // Filtro de estado
+      if (widget.filterEstado != 'todos' && f.estado != widget.filterEstado) {
+        return false;
+      }
+      // Filtro de esquema
+      if (widget.filterEsquema != 'todos' &&
+          f.esquema != widget.filterEsquema) {
+        return false;
+      }
+      // Filtro de proveedor
+      if (widget.filterProveedor != 'todos' &&
+          f.proveedorId != widget.filterProveedor) {
+        return false;
+      }
+      // Búsqueda
+      if (widget.searchQuery.isNotEmpty) {
+        final query = widget.searchQuery.toLowerCase();
+        return f.numeroFactura.toLowerCase().contains(query) ||
+            f.proveedorNombre.toLowerCase().contains(query) ||
+            f.id.toLowerCase().contains(query);
+      }
+      return true;
+    }).toList();
 
     final columns = [
       PlutoColumn(
@@ -283,12 +320,12 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
       decoration: BoxDecoration(
         color: theme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.primary.withOpacity(0.2)),
+        border: Border.all(color: theme.border.withOpacity(0.5), width: 1),
         boxShadow: [
           BoxShadow(
-            color: theme.primary.withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: theme.textPrimary.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -307,7 +344,7 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
             style: PlutoGridStyleConfig(
               gridBackgroundColor: theme.surface,
               rowColor: theme.surface,
-              oddRowColor: theme.primaryBackground.withOpacity(0.3),
+              oddRowColor: theme.primaryBackground.withOpacity(0.5),
               activatedColor: theme.primary.withOpacity(0.15),
               checkedColor: theme.secondary.withOpacity(0.2),
               cellTextStyle: TextStyle(
@@ -350,7 +387,6 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
                 if (request.filterRows.isNotEmpty) {
                   for (var filter in request.filterRows) {
                     final field = filter.cells['column']?.value;
-                    final filterType = filter.cells['type']?.value;
                     final filterValue = filter.cells['value']?.value
                             ?.toString()
                             .toLowerCase() ??
@@ -458,41 +494,24 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            theme.primary.withOpacity(0.08),
-            theme.primary.withOpacity(0.02),
-          ],
-        ),
+        color: theme.surface,
         border: Border(
-          bottom: BorderSide(color: theme.border.withOpacity(0.5)),
+          bottom: BorderSide(color: theme.border.withOpacity(0.3)),
         ),
       ),
       child: Row(
         children: [
-          // Icono con degradado
+          // Icono
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  theme.primary.withOpacity(0.2),
-                  theme.primary.withOpacity(0.05),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: theme.primary.withOpacity(0.3),
-              ),
+              color: theme.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
               Icons.receipt_long,
               color: theme.primary,
-              size: 22,
+              size: 20,
             ),
           ),
           const SizedBox(width: 12),
@@ -506,51 +525,19 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
             ),
           ),
           const Spacer(),
-          // Botón con degradado
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  theme.primary,
-                  theme.primary.withOpacity(0.85),
-                ],
+          // Botón
+          ElevatedButton.icon(
+            onPressed: () => _createFactura(context),
+            icon: const Icon(Icons.add, size: 18),
+            label: const Text('Nueva Factura'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.primary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: theme.primary.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () => _createFactura(context),
-                borderRadius: BorderRadius.circular(10),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.add, size: 18, color: Colors.white),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Nueva Factura',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              elevation: 0,
             ),
           ),
         ],
