@@ -6,7 +6,6 @@ import 'package:facturacion_demo/providers/validacion_provider.dart';
 import 'package:facturacion_demo/providers/factura_provider.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/functions/date_format.dart';
-import 'package:facturacion_demo/widgets/status_badge.dart';
 
 /// ============================================================================
 /// VALIDACION PLUTO GRID
@@ -110,7 +109,7 @@ class _ValidacionPlutoGridState extends State<ValidacionPlutoGrid> {
               disabledIconColor: theme.textDisabled,
               menuBackgroundColor: theme.surface,
               columnHeight: 48,
-              rowHeight: 56,
+              rowHeight: 75,
               defaultColumnTitlePadding: const EdgeInsets.all(16),
               defaultCellPadding: const EdgeInsets.all(12),
               enableColumnBorderVertical: false,
@@ -324,29 +323,81 @@ class _ValidacionPlutoGridState extends State<ValidacionPlutoGrid> {
           }
 
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Tooltip(
                   message: 'Aprobar',
-                  child: IconButton(
-                    icon: Icon(Icons.check_circle, color: theme.success),
-                    onPressed: () => _handleAprobar(context, validacionId),
-                    iconSize: 20,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+                  child: InkWell(
+                    onTap: () => _handleAprobar(context, validacionId),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            theme.success,
+                            theme.success.withOpacity(0.8),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.success.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.check_circle_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 10),
                 Tooltip(
                   message: 'Rechazar',
-                  child: IconButton(
-                    icon: Icon(Icons.cancel, color: theme.error),
-                    onPressed: () => _handleRechazar(context, validacionId),
-                    iconSize: 20,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+                  child: InkWell(
+                    onTap: () => _handleRechazar(context, validacionId),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            theme.error,
+                            theme.error.withOpacity(0.8),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.error.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.cancel_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -379,26 +430,86 @@ class _ValidacionPlutoGridState extends State<ValidacionPlutoGrid> {
   Widget _buildEstadoBadge(String estado, AppTheme theme) {
     switch (estado) {
       case 'pendiente':
-        return StatusBadge.pendiente(context);
-      case 'aprobado':
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: theme.success.withOpacity(0.15),
+            gradient: LinearGradient(
+              colors: [
+                theme.warning.withOpacity(0.2),
+                theme.warning.withOpacity(0.1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: theme.success, width: 1),
+            border: Border.all(color: theme.warning, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: theme.warning.withOpacity(0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.check_circle, color: theme.success, size: 16),
-              const SizedBox(width: 6),
+              Icon(
+                Icons.pending_outlined,
+                color: theme.warning,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'PENDIENTE',
+                style: TextStyle(
+                  color: theme.warning,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+        );
+      case 'aprobado':
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                theme.success.withOpacity(0.2),
+                theme.success.withOpacity(0.1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: theme.success, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: theme.success.withOpacity(0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_rounded,
+                color: theme.success,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
               Text(
                 'APROBADO',
                 style: TextStyle(
                   color: theme.success,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   fontSize: 12,
+                  letterSpacing: 0.5,
                 ),
               ),
             ],
@@ -406,23 +517,42 @@ class _ValidacionPlutoGridState extends State<ValidacionPlutoGrid> {
         );
       case 'rechazado':
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: theme.error.withOpacity(0.15),
+            gradient: LinearGradient(
+              colors: [
+                theme.error.withOpacity(0.2),
+                theme.error.withOpacity(0.1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: theme.error, width: 1),
+            border: Border.all(color: theme.error, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: theme.error.withOpacity(0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.cancel, color: theme.error, size: 16),
-              const SizedBox(width: 6),
+              Icon(
+                Icons.cancel_rounded,
+                color: theme.error,
+                size: 18,
+              ),
+              const SizedBox(width: 8),
               Text(
                 'RECHAZADO',
                 style: TextStyle(
                   color: theme.error,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   fontSize: 12,
+                  letterSpacing: 0.5,
                 ),
               ),
             ],

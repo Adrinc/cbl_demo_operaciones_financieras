@@ -4,6 +4,7 @@ import 'package:facturacion_demo/providers/validacion_provider.dart';
 import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/pages/validaciones/widgets/validacion_pluto_grid.dart';
+import 'package:facturacion_demo/pages/validaciones/widgets/validacion_mobile_cards.dart';
 import 'package:facturacion_demo/pages/validaciones/widgets/credit_note_form.dart';
 
 /// ============================================================================
@@ -23,6 +24,7 @@ class _ValidacionesPageState extends State<ValidacionesPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _currentTab = 0;
+  bool _showInfoMessage = true;
 
   @override
   void initState() {
@@ -143,63 +145,71 @@ class _ValidacionesPageState extends State<ValidacionesPage>
                 const SizedBox(height: 20),
 
                 // Información contextual
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        theme.accent.withOpacity(0.1),
-                        theme.secondary.withOpacity(0.05),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                if (_showInfoMessage)
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.accent.withOpacity(0.1),
+                          theme.secondary.withOpacity(0.05),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: theme.accent.withOpacity(0.3)),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: theme.accent.withOpacity(0.3)),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: theme.accent.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(10),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: theme.accent.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.help_outline,
+                            color: theme.accent,
+                            size: 24,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.help_outline,
-                          color: theme.accent,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '¿Para qué sirve esta pantalla?',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: theme.textPrimary,
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '¿Para qué sirve esta pantalla?',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.textPrimary,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Antes de ejecutar pagos, es necesario verificar ajustes pendientes: notas de crédito (devoluciones/descuentos), estados de pago (confirmaciones bancarias) y condiciones comerciales (cambios en acuerdos). Aquí apruebas o rechazas estas validaciones.',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: theme.textSecondary,
-                                height: 1.5,
+                              const SizedBox(height: 4),
+                              Text(
+                                'Antes de ejecutar pagos, es necesario verificar ajustes pendientes: notas de crédito (devoluciones/descuentos), estados de pago (confirmaciones bancarias) y condiciones comerciales (cambios en acuerdos). Aquí apruebas o rechazas estas validaciones.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.textSecondary,
+                                  height: 1.5,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: () =>
+                              setState(() => _showInfoMessage = false),
+                          icon: Icon(Icons.close, color: theme.textSecondary),
+                          tooltip: 'Ocultar mensaje',
+                          iconSize: 20,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                if (_showInfoMessage) const SizedBox(height: 20),
 
                 // Tabs
                 Container(
@@ -303,12 +313,17 @@ class _ValidacionesPageState extends State<ValidacionesPage>
           _buildStatsCards(validaciones, theme, isMobile),
           const SizedBox(height: 24),
 
-          // Table
+          // Table or Cards
           Expanded(
-            child: ValidacionPlutoGrid(
-              validaciones: validaciones,
-              tipo: tipo,
-            ),
+            child: isMobile
+                ? ValidacionMobileCards(
+                    validaciones: validaciones,
+                    tipo: tipo,
+                  )
+                : ValidacionPlutoGrid(
+                    validaciones: validaciones,
+                    tipo: tipo,
+                  ),
           ),
         ],
       ),

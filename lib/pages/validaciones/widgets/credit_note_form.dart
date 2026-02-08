@@ -132,27 +132,13 @@ class _CreditNoteFormDialogState extends State<CreditNoteFormDialog> {
                   items: facturasDisponibles.map((factura) {
                     return DropdownMenuItem<String>(
                       value: factura.id,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              '${factura.numeroFactura} - ${factura.proveedorNombre}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: theme.textPrimary,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Text(
-                            '\$${factura.importe.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: theme.textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        '${factura.numeroFactura} - ${factura.proveedorNombre} (\$${factura.importe.toStringAsFixed(2)})',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textPrimary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     );
                   }).toList(),
