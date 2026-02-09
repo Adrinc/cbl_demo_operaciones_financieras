@@ -60,8 +60,8 @@ class _ReportesPageState extends State<ReportesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header con estadísticas generales
-            _buildStatsHeader(
-                theme, ahorroTotal, montoTotal, pagosEjecutados.length),
+            _buildStatsHeader(theme, ahorroTotal, montoTotal,
+                pagosEjecutados.length, isMobile),
             const SizedBox(height: 24),
 
             // Filtros
@@ -153,9 +153,9 @@ class _ReportesPageState extends State<ReportesPage> {
   }
 
   Widget _buildStatsHeader(AppTheme theme, double ahorroTotal,
-      double montoTotal, int cantidadPagos) {
+      double montoTotal, int cantidadPagos, bool isMobile) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(isMobile ? 16 : 20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [theme.primary, theme.primary.withOpacity(0.8)],
@@ -176,14 +176,25 @@ class _ReportesPageState extends State<ReportesPage> {
         children: [
           Row(
             children: [
-              Icon(Icons.analytics, color: Colors.white, size: 32),
+              Icon(
+                Icons.analytics,
+                color: Colors.white,
+                size: isMobile ? 28 : 32,
+              ),
               const SizedBox(width: 12),
-              Text(
-                'Reportes y Análisis de Ahorro',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  isMobile
+                      ? 'Reportes y Análisis de Ahorro'
+                      : 'Reportes y Análisis de Ahorro',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: isMobile ? 18 : 24,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -231,27 +242,33 @@ class _ReportesPageState extends State<ReportesPage> {
       children: [
         Icon(icon, color: color.withOpacity(0.9), size: 20),
         const SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: color.withOpacity(0.9),
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: color.withOpacity(0.9),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              value,
-              style: TextStyle(
-                color: color,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 2),
+              Text(
+                value,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -300,14 +317,19 @@ class _ReportesPageState extends State<ReportesPage> {
                 onPressed: () => _selectDateRange(context, theme),
                 icon: Icon(Icons.date_range, size: 18),
                 label: Text(
-                  '${_dateRange.start.day}/${_dateRange.start.month}/${_dateRange.start.year} - ${_dateRange.end.day}/${_dateRange.end.month}/${_dateRange.end.year}',
+                  isMobile
+                      ? '${_dateRange.start.day}/${_dateRange.start.month} - ${_dateRange.end.day}/${_dateRange.end.month}/26'
+                      : '${_dateRange.start.day}/${_dateRange.start.month}/${_dateRange.start.year} - ${_dateRange.end.day}/${_dateRange.end.month}/${_dateRange.end.year}',
+                  style: TextStyle(fontSize: isMobile ? 12 : 14),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.primaryBackground,
                   foregroundColor: theme.textPrimary,
                   side: BorderSide(color: theme.border),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 12 : 16,
+                    vertical: isMobile ? 10 : 12,
+                  ),
                 ),
               ),
 

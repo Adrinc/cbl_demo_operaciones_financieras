@@ -4,6 +4,7 @@ import 'package:facturacion_demo/providers/factura_provider.dart';
 import 'package:facturacion_demo/providers/pago_provider.dart';
 import 'package:facturacion_demo/widgets/kpi_card.dart';
 import 'package:facturacion_demo/helpers/constants.dart';
+import 'package:facturacion_demo/functions/money_format.dart';
 
 /// ============================================================================
 /// KPI CARDS SECTION - Dashboard
@@ -37,7 +38,7 @@ class KPICardsSection extends StatelessWidget {
             child: KPICard(
               icon: Icons.savings,
               title: 'Ahorro Generado',
-              value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
+              value: moneyFormat(ahorroGenerado),
               subtitle: 'Optimización activa en $ejercicioFiscal',
               color: const Color(0xFF10B981),
               trendIcon: Icons.trending_up,
@@ -84,7 +85,7 @@ class KPICardsSection extends StatelessWidget {
             child: KPICard(
               icon: Icons.trending_down,
               title: 'Ahorro Perdido',
-              value: '\$ ${ahorroPerdido.toStringAsFixed(2)} USD',
+              value: moneyFormat(ahorroPerdido),
               subtitle: 'Oportunidad',
               color: const Color(0xFFEF4444),
               trendIcon: Icons.warning,
@@ -121,7 +122,7 @@ class KPICardsSection extends StatelessWidget {
               child: KPICard(
                 icon: Icons.savings,
                 title: 'Ahorro Generado',
-                value: '\$ ${ahorroGenerado.toStringAsFixed(2)} USD',
+                value: moneyFormat(ahorroGenerado),
                 subtitle: 'Con optimización',
                 color: const Color(0xFF10B981),
                 trendIcon: Icons.trending_up,
@@ -153,7 +154,7 @@ class KPICardsSection extends StatelessWidget {
               child: KPICard(
                 icon: Icons.trending_down,
                 title: 'Ahorro Perdido',
-                value: '\$ ${ahorroPerdido.toStringAsFixed(2)} USD',
+                value: moneyFormat(ahorroPerdido),
                 subtitle: 'Oportunidad no aprovechada',
                 color: const Color(0xFFEF4444),
                 trendIcon: Icons.warning,

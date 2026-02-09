@@ -8,6 +8,7 @@ import 'package:facturacion_demo/helpers/constants.dart';
 import 'package:facturacion_demo/widgets/status_badge.dart';
 import 'package:facturacion_demo/pages/facturas/widgets/factura_form_dialog.dart';
 import 'package:facturacion_demo/functions/date_format.dart';
+import 'package:facturacion_demo/functions/money_format.dart';
 
 /// ============================================================================
 /// FACTURA PLUTO GRID - Desktop Table
@@ -135,7 +136,7 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             alignment: Alignment.centerRight,
             child: Text(
-              '\$ ${value.toStringAsFixed(2)} USD',
+              moneyFormat(value),
               style: TextStyle(
                 color: theme.primaryText,
                 fontSize: 13,
@@ -216,7 +217,7 @@ class _FacturaPlutoGridState extends State<FacturaPlutoGrid> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      '\$ ${value.toStringAsFixed(2)}',
+                      moneyFormat(value),
                       style: TextStyle(
                         color: theme.secondary,
                         fontSize: 12,

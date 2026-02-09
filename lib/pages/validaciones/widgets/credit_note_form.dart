@@ -4,6 +4,7 @@ import 'package:facturacion_demo/models/models.dart';
 import 'package:facturacion_demo/providers/validacion_provider.dart';
 import 'package:facturacion_demo/providers/factura_provider.dart';
 import 'package:facturacion_demo/theme/theme.dart';
+import 'package:facturacion_demo/functions/money_format.dart';
 
 /// ============================================================================
 /// CREDIT NOTE FORM DIALOG
@@ -133,7 +134,7 @@ class _CreditNoteFormDialogState extends State<CreditNoteFormDialog> {
                     return DropdownMenuItem<String>(
                       value: factura.id,
                       child: Text(
-                        '${factura.numeroFactura} - ${factura.proveedorNombre} (\$${factura.importe.toStringAsFixed(2)})',
+                        '${factura.numeroFactura} - ${factura.proveedorNombre} (${moneyFormatCompact(factura.importe)})',
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textPrimary,
@@ -373,7 +374,7 @@ class _CreditNoteFormDialogState extends State<CreditNoteFormDialog> {
       tipo: 'nota_credito',
       facturaId: _selectedFacturaId!,
       descripcion:
-          'Nota de crédito por \$${_monto.toStringAsFixed(2)} USD. Motivo: $_motivo',
+          'Nota de cr\u00e9dito por ${moneyFormat(_monto)}. Motivo: $_motivo',
       estado: 'pendiente',
       fecha: DateTime.now(),
       motivo: _motivo,

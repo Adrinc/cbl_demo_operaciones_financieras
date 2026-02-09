@@ -23,7 +23,10 @@ class Sidebar extends StatelessWidget {
   Future<void> _launchURL(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.platformDefault);
+      await launchUrl(
+        uri,
+        webOnlyWindowName: '_self', // Abre en la misma ventana/tab
+      );
     }
   }
 

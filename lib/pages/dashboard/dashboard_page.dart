@@ -37,8 +37,8 @@ class DashboardPage extends StatelessWidget {
           const SizedBox(height: 24),
 
           // ==================== SECCIÓN 3: Acciones Rápidas ====================
-          const QuickActionsSection(),
-          const SizedBox(height: 24),
+          /*       const QuickActionsSection(),
+          const SizedBox(height: 24), */
 
           // ==================== SECCIÓN 4: Alertas Críticas ====================
           const AlertsWidget(),

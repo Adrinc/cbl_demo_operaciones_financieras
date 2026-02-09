@@ -6,6 +6,7 @@ import 'package:facturacion_demo/theme/theme.dart';
 import 'package:facturacion_demo/pages/optimizacion/widgets/invoice_selector.dart';
 import 'package:facturacion_demo/pages/optimizacion/widgets/optimization_summary.dart';
 import 'package:facturacion_demo/pages/optimizacion/widgets/payment_actions.dart';
+import 'package:facturacion_demo/functions/money_format.dart';
 
 /// ============================================================================
 /// OPTIMIZACIÓN DE PAGOS PAGE
@@ -209,7 +210,7 @@ class _OptimizacionPageState extends State<OptimizacionPage> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'Propuesta de pago creada: ${facturas.length} facturas por \$${montoFinal.toStringAsFixed(2)} USD con ahorro de \$${ahorro.toStringAsFixed(2)} USD',
+                'Propuesta de pago creada: ${facturas.length} facturas por ${moneyFormat(montoFinal)} con ahorro de ${moneyFormat(ahorro)}',
                 style: const TextStyle(color: Colors.white),
               ),
             ),
@@ -244,8 +245,8 @@ class _OptimizacionPageState extends State<OptimizacionPage> {
           ],
         ),
         content: Text(
-          '¿Deseas ejecutar el pago de ${facturas.length} facturas por \$${montoFinal.toStringAsFixed(2)} USD?\n\n'
-          'Ahorro generado: \$${ahorro.toStringAsFixed(2)} USD',
+          '\u00bfDeseas ejecutar el pago de ${facturas.length} facturas por ${moneyFormat(montoFinal)}?\n\n'
+          'Ahorro generado: ${moneyFormat(ahorro)}',
         ),
         actions: [
           TextButton(
@@ -265,7 +266,7 @@ class _OptimizacionPageState extends State<OptimizacionPage> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          '¡Pago ejecutado exitosamente! Ahorro: \$${ahorro.toStringAsFixed(2)} USD',
+                          '\u00a1Pago ejecutado exitosamente! Ahorro: ${moneyFormat(ahorro)}',
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
